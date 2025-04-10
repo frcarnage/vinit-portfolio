@@ -2,21 +2,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Thank You</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Let’s Connect</title>
   <style>
-    body { 
-      font-family: sans-serif;
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      height: 100vh; 
-      background-color: #f0f0f0;
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #141e30, #243b55);
+      color: #fff;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
     }
-    h1 { color: #333; }
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+    .buttons a {
+      display: inline-block;
+      margin: 10px;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s ease;
+    }
+    .telegram {
+      background: #229ED9;
+      color: white;
+    }
+    .email {
+      background: #333;
+      color: white;
+    }
+    .telegram:hover, .email:hover {
+      transform: scale(1.05);
+    }
   </style>
 </head>
 <body>
-  <h1>✅ Thank you for your message, Vinit!</h1>
+  <h1>🚀 Let’s Work Together</h1>
+  <p>You can contact me directly through Telegram or Email:</p>
+
+  <div class="buttons">
+    <a href="https://t.me/CarnageV1" class="telegram" target="_blank">💬 Telegram</a>
+    <a href="mailto:vinit2712@aol.com" class="email">📧 Email Me</a>
+  </div>
 </body>
 </html>
