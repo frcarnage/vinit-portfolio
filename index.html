@@ -4,56 +4,56 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Vinit | Developer Portfolio</title>
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
   <style>
-    body {
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
       font-family: 'Segoe UI', sans-serif;
       background-color: #f4f4f4;
       color: #333;
     }
 
-    header {
-      background-color: #1e1e2f;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-
-    nav ul {
-      list-style: none;
+    #hero {
+      position: relative;
+      height: 100vh;
+      background: #0f2027;
+      background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
       display: flex;
       justify-content: center;
-      gap: 30px;
-      padding: 0;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      color: white;
+      overflow: hidden;
     }
 
-    nav ul li a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
+    #typed-text {
+      font-size: 2rem;
+      margin-top: 20px;
+    }
+
+    #particles-js {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      z-index: 0;
+    }
+
+    #hero-content {
+      position: relative;
+      z-index: 1;
     }
 
     section {
-      padding: 80px 20px;
+      padding: 60px 20px;
       text-align: center;
-    }
-
-    #about, #projects {
-      background-color: #fff;
-    }
-
-    #contact {
-      background-color: #f0f0f0;
-    }
-
-    h2 {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-    }
-
-    p {
-      font-size: 1.2rem;
-      margin-bottom: 20px;
     }
 
     .buttons a {
@@ -92,31 +92,27 @@
 </head>
 <body>
 
-  <header>
-    <h1>Vinit - Developer</h1>
-    <nav>
-      <ul>
-        <li><a href="#about">About</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
+  <div id="hero">
+    <div id="particles-js"></div>
+    <div id="hero-content">
+      <h1>Hi, I'm</h1>
+      <h2 id="typed-text"></h2>
+    </div>
+  </div>
 
   <section id="about">
     <h2>👋 About Me</h2>
-    <p>Hey! I’m Vinit, a 16-year-old passionate developer who can build Telegram bots, websites, and cool stuff with code! Let’s build something awesome together.</p>
+    <p>I’m Vinit, a 16-year-old dev who builds Telegram bots, websites, and more. Let’s collaborate!</p>
   </section>
 
   <section id="projects">
     <h2>🚀 Projects</h2>
-    <p>I’ve built Telegram bots, crypto swap tools, and cool web apps. More coming soon...</p>
+    <p>Telegram bots, crypto tools, custom websites – built with love & code.</p>
   </section>
 
   <section id="contact">
     <h2>📬 Contact Me</h2>
-    <p>Feel free to reach out directly on Telegram or Email:</p>
-
+    <p>You can contact me directly on Telegram or Email:</p>
     <div class="buttons">
       <a href="https://t.me/CarnageV1" class="telegram" target="_blank">💬 Telegram</a>
       <a href="mailto:vinit2712@aol.com" class="email">📧 Email</a>
@@ -126,6 +122,35 @@
   <footer>
     <p>© 2025 Vinit. All rights reserved.</p>
   </footer>
+
+  <script>
+    new Typed("#typed-text", {
+      strings: ["Vinit", "a Developer", "a Bot Builder", "a Web Wizard 💻", "your next hire 😉"],
+      typeSpeed: 70,
+      backSpeed: 40,
+      loop: true
+    });
+
+    particlesJS("particles-js", {
+      "particles": {
+        "number": { "value": 60 },
+        "size": { "value": 3 },
+        "color": { "value": "#ffffff" },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#ffffff",
+          "opacity": 0.4,
+          "width": 1
+        }
+      },
+      "interactivity": {
+        "events": {
+          "onhover": { "enable": true, "mode": "repulse" }
+        }
+      }
+    });
+  </script>
 
 </body>
 </html>
