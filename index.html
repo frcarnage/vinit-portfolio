@@ -4,18 +4,69 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Vinit | Developer Portfolio</title>
+
+  <!-- Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <!-- Styles -->
   <style>
+    :root {
+      --bg-color: #f4f4f4;
+      --text-color: #333;
+      --nav-bg: #fff;
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #121212;
+      --text-color: #f4f4f4;
+      --nav-bg: #1e1e1e;
+    }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      scroll-behavior: smooth;
     }
+
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f4f4f4;
-      color: #333;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: background 0.3s, color 0.3s;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: var(--nav-bg);
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text-color);
+      font-weight: 500;
+    }
+
+    .theme-toggle {
+      cursor: pointer;
+      font-size: 20px;
     }
 
     #hero {
@@ -51,8 +102,15 @@
     }
 
     section {
-      padding: 60px 20px;
+      padding: 80px 20px;
       text-align: center;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
     }
 
     .buttons a {
@@ -80,19 +138,14 @@
       transform: scale(1.05);
     }
 
-    .payments-list {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-      margin-top: 20px;
+    .payments ul {
+      list-style: none;
+      padding: 0;
     }
 
-    .payments-list span {
-      background: #e0e0e0;
-      padding: 10px 16px;
-      border-radius: 20px;
-      font-weight: bold;
+    .payments li {
+      font-size: 18px;
+      margin-bottom: 10px;
     }
 
     footer {
@@ -104,8 +157,21 @@
     }
   </style>
 </head>
-<body>
+<body data-theme="light">
 
+  <!-- Navbar -->
+  <nav>
+    <ul>
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#payments">Payments</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="theme-toggle" onclick="toggleTheme()">🌓</div>
+  </nav>
+
+  <!-- Hero Section -->
   <div id="hero">
     <div id="particles-js"></div>
     <div id="hero-content">
@@ -114,34 +180,30 @@
     </div>
   </div>
 
-  <section id="about">
+  <!-- About Me -->
+  <section id="about" data-aos="fade-up">
     <h2>👋 About Me</h2>
     <p>I’m Vinit, a 16-year-old dev who builds Telegram bots, websites, and more. Let’s collaborate!</p>
   </section>
 
-  <section id="projects">
+  <!-- Projects -->
+  <section id="projects" data-aos="fade-up">
     <h2>🚀 Projects</h2>
     <p>Telegram bots, crypto tools, custom websites – built with love & code.</p>
   </section>
 
-  <section id="payments">
-    <h2>💸 Payment Methods</h2>
-    <p>I accept payments via UPI and Crypto. You'll receive my payment details after contacting me.</p>
-    <div class="payments-list">
-      <span>UPI</span>
-      <span>BTC</span>
-      <span>LTC</span>
-      <span>ETH</span>
-      <span>USDT (TRC20, ERC20, etc.)</span>
-      <span>SOL</span>
-      <span>TON</span>
-      <span>TRUMP</span>
-      <span>XRP</span>
-      <span>Monero</span>
-    </div>
+  <!-- Payment Methods -->
+  <section id="payments" class="payments" data-aos="fade-up">
+    <h2>💰 Payment Methods</h2>
+    <ul>
+      <li>✅ UPI (on request)</li>
+      <li>✅ Crypto: BTC, ETH, LTC, USDT (any network), XRP, SOL, TON, MONERO, TRUMP</li>
+    </ul>
+    <p>Contact me to get payment address directly.</p>
   </section>
 
-  <section id="contact">
+  <!-- Contact -->
+  <section id="contact" data-aos="fade-up">
     <h2>📬 Contact Me</h2>
     <p>You can contact me directly on Telegram or Email:</p>
     <div class="buttons">
@@ -150,10 +212,12 @@
     </div>
   </section>
 
+  <!-- Footer -->
   <footer>
     <p>© 2025 Vinit. All rights reserved.</p>
   </footer>
 
+  <!-- Scripts -->
   <script>
     new Typed("#typed-text", {
       strings: ["Vinit", "a Developer", "a Bot Builder", "a Web Wizard 💻", "your next hire 😉"],
@@ -181,7 +245,14 @@
         }
       }
     });
-  </script>
 
+    function toggleTheme() {
+      const body = document.body;
+      const currentTheme = body.getAttribute('data-theme');
+      body.setAttribute('data-theme', currentTheme === 'dark' ? 'light' : 'dark');
+    }
+
+    AOS.init();
+  </script>
 </body>
 </html>
