@@ -87,18 +87,17 @@
 <section id="contact">
   <h2>📬 Contact Me</h2>
   <p>You can also message me directly using the form below:</p>
+<form name="contact" method="POST" data-netlify="true" action="/thank-you.html" netlify-honeypot="bot-field">
+  <input type="hidden" name="form-name" value="contact" />
+  <p hidden>
+    <label>Don’t fill this out: <input name="bot-field" /></label>
+  </p>
 
-  <form name="contact" method="POST" data-netlify="true" action="thank-you.html" netlify-honeypot="bot-field">
-    <input type="hidden" name="form-name" value="contact" />
-    <p hidden>
-      <label>Don’t fill this out: <input name="bot-field" /></label>
-    </p>
-
-    <input type="text" name="name" placeholder="Your Name" required>
-    <input type="email" name="email" placeholder="Your Email" required>
-    <textarea name="message" placeholder="Your Message" required></textarea>
-    <button type="submit">Send</button>
-  </form>
+  <input type="text" name="name" placeholder="Your Name" required>
+  <input type="email" name="email" placeholder="Your Email" required>
+  <textarea name="message" placeholder="Your Message" required></textarea>
+  <button type="submit">Send</button>
+</form>
 </section>
 
 <footer>
