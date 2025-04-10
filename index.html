@@ -4,143 +4,184 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Vinit | Developer Portfolio</title>
-  <link rel="stylesheet" href="assets/css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-  <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
   <style>
-    /* Inline styles in case no external CSS */
-    body {
+    * {
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #0e0e0e;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    #hero {
+      position: relative;
+      height: 100vh;
+      background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
       color: white;
-      overflow-x: hidden;
+      overflow: hidden;
+    }
+
+    #typed-text {
+      font-size: 2rem;
+      margin-top: 20px;
     }
 
     #particles-js {
-      position: fixed;
-      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
       height: 100%;
-      z-index: -1;
+      width: 100%;
+      z-index: 0;
     }
 
-    header {
-      padding: 100px 20px 60px;
+    #hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    section {
+      padding: 60px 20px;
       text-align: center;
     }
 
-    .typed-text {
-      font-size: 2.5rem;
-      font-weight: bold;
-      color: #00f0ff;
-    }
-
-    p.subtext {
-      font-size: 1.2rem;
-      color: #ccc;
-      margin-top: 10px;
-    }
-
-    .contact-buttons {
-      margin-top: 40px;
-    }
-
-    .contact-buttons a {
+    .buttons a {
+      display: inline-block;
       margin: 10px;
       padding: 12px 24px;
-      background-color: #1f1f1f;
-      border: 2px solid #00f0ff;
-      color: #00f0ff;
-      text-decoration: none;
       border-radius: 8px;
-      transition: 0.3s;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s ease;
     }
 
-    .contact-buttons a:hover {
-      background: #00f0ff;
-      color: black;
+    .telegram {
+      background: #229ED9;
+      color: white;
     }
 
-    #accepted-coins {
-      text-align: center;
-      padding: 60px 20px;
-      background-color: #111;
+    .email {
+      background: #333;
+      color: white;
     }
 
-    #accepted-coins h2 {
-      font-size: 2rem;
+    .telegram:hover,
+    .email:hover {
+      transform: scale(1.05);
     }
 
-    .coin-icons {
-      margin-top: 30px;
+    .payments-list {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 20px;
+      gap: 15px;
+      margin-top: 20px;
     }
 
-    .coin-icons img {
-      width: 50px;
-      height: 50px;
-      border-radius: 12px;
-      transition: transform 0.3s;
-    }
-
-    .coin-icons img:hover {
-      transform: scale(1.1);
+    .payments-list span {
+      background: #e0e0e0;
+      padding: 10px 16px;
+      border-radius: 20px;
+      font-weight: bold;
     }
 
     footer {
+      background-color: #1e1e2f;
+      color: white;
       text-align: center;
       padding: 20px;
-      color: #aaa;
-      font-size: 0.9rem;
-      margin-top: 60px;
+      margin-top: 50px;
     }
   </style>
 </head>
 <body>
-  <div id="particles-js"></div>
 
-  <header>
-    <div class="typed-text"></div>
-    <p class="subtext">I create Telegram bots, websites, and backends.</p>
-
-    <div class="contact-buttons">
-      <a href="https://t.me/CarnageV1" target="_blank">📨 Telegram</a>
-      <a href="mailto:vinit2712@aol.com" target="_blank">📧 Email</a>
+  <div id="hero">
+    <div id="particles-js"></div>
+    <div id="hero-content">
+      <h1>Hi, I'm</h1>
+      <h2 id="typed-text"></h2>
     </div>
-  </header>
+  </div>
 
-  <section id="accepted-coins">
-    <h2>💳 Accepted Payment Methods</h2>
-    <p>UPI & Crypto</p>
-    <div class="coin-icons">
-      <img src="assets/icons/btc.png" alt="BTC">
-      <img src="assets/icons/eth.png" alt="ETH">
-      <img src="assets/icons/usdt.png" alt="USDT">
-      <img src="assets/icons/ltc.png" alt="LTC">
-      <img src="assets/icons/ton.png" alt="TON">
-      <img src="assets/icons/sol.png" alt="SOL">
-      <img src="assets/icons/xrp.png" alt="XRP">
-      <img src="assets/icons/monero.png" alt="XMR">
-      <img src="assets/icons/trump.png" alt="TRUMP">
+  <section id="about">
+    <h2>👋 About Me</h2>
+    <p>I’m Vinit, a 16-year-old dev who builds Telegram bots, websites, and more. Let’s collaborate!</p>
+  </section>
+
+  <section id="projects">
+    <h2>🚀 Projects</h2>
+    <p>Telegram bots, crypto tools, custom websites – built with love & code.</p>
+  </section>
+
+  <section id="payments">
+    <h2>💸 Payment Methods</h2>
+    <p>I accept payments via UPI and Crypto. You'll receive my payment details after contacting me.</p>
+    <div class="payments-list">
+      <span>UPI</span>
+      <span>BTC</span>
+      <span>LTC</span>
+      <span>ETH</span>
+      <span>USDT (TRC20, ERC20, etc.)</span>
+      <span>SOL</span>
+      <span>TON</span>
+      <span>TRUMP</span>
+      <span>XRP</span>
+      <span>Monero</span>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>📬 Contact Me</h2>
+    <p>You can contact me directly on Telegram or Email:</p>
+    <div class="buttons">
+      <a href="https://t.me/CarnageV1" class="telegram" target="_blank">💬 Telegram</a>
+      <a href="mailto:vinit2712@aol.com" class="email">📧 Email</a>
     </div>
   </section>
 
   <footer>
-    Made with ❤️ by Vinit • Telegram: @CarnageV1 • Email: vinit2712@aol.com
+    <p>© 2025 Vinit. All rights reserved.</p>
   </footer>
 
   <script>
-    const typed = new Typed(".typed-text", {
-      strings: ["Hi, I'm Vinit", "Developer", "Bot Builder", "Web Wizard"],
+    new Typed("#typed-text", {
+      strings: ["Vinit", "a Developer", "a Bot Builder", "a Web Wizard 💻", "your next hire 😉"],
       typeSpeed: 70,
-      backSpeed: 50,
+      backSpeed: 40,
       loop: true
     });
 
-    particlesJS.load("particles-js", "https://cdn.jsdelivr.net/gh/VincentGarreau/particles.js@master/demo/particles.json");
+    particlesJS("particles-js", {
+      "particles": {
+        "number": { "value": 60 },
+        "size": { "value": 3 },
+        "color": { "value": "#ffffff" },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#ffffff",
+          "opacity": 0.4,
+          "width": 1
+        }
+      },
+      "interactivity": {
+        "events": {
+          "onhover": { "enable": true, "mode": "repulse" }
+        }
+      }
+    });
   </script>
+
 </body>
 </html>
