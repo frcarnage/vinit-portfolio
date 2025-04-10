@@ -2,126 +2,73 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vinit | Developer Portfolio</title>
-
-  <!-- Typed.js -->
   <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-
-  <!-- Particles.js -->
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-
-  <!-- AOS.js -->
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
-  <!-- Vanilla Tilt.js -->
-  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.2/dist/vanilla-tilt.min.js"></script>
-
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
   <style>
-    :root {
-      --bg: #f4f4f4;
-      --text: #333;
-      --section-bg: #fff;
-      --nav-bg: rgba(255, 255, 255, 0.95);
-    }
-
-    body.dark {
-      --bg: #121212;
-      --text: #f0f0f0;
-      --section-bg: #1e1e1e;
-      --nav-bg: rgba(18, 18, 18, 0.95);
-    }
-
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
       scroll-behavior: smooth;
     }
-
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
+      background-color: #f4f4f4;
+      color: #333;
+      transition: background 0.3s, color 0.3s;
     }
-
-    nav {
+    header {
       position: fixed;
       top: 0;
       width: 100%;
-      background: var(--nav-bg);
-      padding: 10px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 999;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      background-color: #1e1e2f;
+      color: white;
+      padding: 10px 0;
+      z-index: 1000;
+      text-align: center;
     }
-
-    nav a {
-      margin: 0 10px;
+    header nav a {
+      margin: 0 15px;
       text-decoration: none;
-      color: var(--text);
+      color: white;
       font-weight: bold;
     }
-
-    .toggle-btn {
-      cursor: pointer;
-      padding: 6px 12px;
-      background: #555;
-      color: white;
-      border-radius: 6px;
-    }
-
     #hero {
+      position: relative;
       height: 100vh;
       background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
-      color: white;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      position: relative;
+      text-align: center;
+      color: white;
       overflow: hidden;
     }
-
-    #particles-js {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: 0;
-    }
-
-    #hero-content {
-      z-index: 1;
-      text-align: center;
-    }
-
     #typed-text {
       font-size: 2rem;
-      margin-top: 10px;
+      margin-top: 20px;
     }
-
+    #particles-js {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      z-index: 0;
+    }
+    #hero-content {
+      position: relative;
+      z-index: 1;
+    }
     section {
       padding: 80px 20px;
-      background: var(--section-bg);
       text-align: center;
     }
-
-    .tilt {
-      display: inline-block;
-      padding: 20px;
-      background: #eee;
-      border-radius: 20px;
-      margin: 10px;
-      box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
-    }
-
-    body.dark .tilt {
-      background: #2c2c2c;
-    }
-
     .buttons a {
       display: inline-block;
       margin: 10px;
@@ -131,45 +78,81 @@
       font-weight: bold;
       transition: 0.3s ease;
     }
-
     .telegram {
       background: #229ED9;
       color: white;
     }
-
     .email {
       background: #333;
       color: white;
     }
-
     .telegram:hover,
     .email:hover {
       transform: scale(1.05);
     }
-
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+    .project {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+    .project:hover {
+      transform: translateY(-10px);
+    }
+    .testimonial {
+      background: #fafafa;
+      border-left: 5px solid #229ED9;
+      margin: 20px auto;
+      padding: 20px;
+      max-width: 600px;
+      border-radius: 10px;
+    }
+    .payment-methods {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 30px;
+    }
+    .floating-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #229ED9;
+      color: white;
+      border-radius: 50px;
+      padding: 12px 20px;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      z-index: 999;
+    }
     footer {
       background-color: #1e1e2f;
       color: white;
       text-align: center;
       padding: 20px;
+      margin-top: 50px;
     }
   </style>
 </head>
 <body>
-
-  <!-- Nav -->
-  <nav>
-    <div>
-      <a href="#hero">Home</a>
+  <header>
+    <nav>
       <a href="#about">About</a>
       <a href="#projects">Projects</a>
-      <a href="#payments">Payments</a>
       <a href="#contact">Contact</a>
-    </div>
-    <div class="toggle-btn" onclick="toggleMode()">🌓 Mode</div>
-  </nav>
+      <a href="#payments">Payments</a>
+    </nav>
+  </header>
 
-  <!-- Hero Section -->
   <div id="hero">
     <div id="particles-js"></div>
     <div id="hero-content">
@@ -178,51 +161,64 @@
     </div>
   </div>
 
-  <!-- About -->
   <section id="about" data-aos="fade-up">
     <h2>👋 About Me</h2>
-    <p class="tilt" data-tilt>I’m Vinit, a 16-year-old dev who builds Telegram bots, websites, and more. Let’s collaborate!</p>
+    <p>I’m Vinit, a 16-year-old dev who builds Telegram bots, websites, and more. Let’s collaborate!</p>
   </section>
 
-  <!-- Projects -->
-  <section id="projects" data-aos="fade-right">
+  <section id="projects" data-aos="fade-up">
     <h2>🚀 Projects</h2>
-    <p class="tilt" data-tilt>Telegram bots, crypto tools, custom websites – built with love & code.</p>
+    <div class="project-grid">
+      <div class="project">Crypto Swap Bot</div>
+      <div class="project">AI Image Generator</div>
+      <div class="project">Portfolio Website</div>
+    </div>
   </section>
 
-  <!-- Payments -->
-  <section id="payments" data-aos="zoom-in">
-    <h2>💰 Payment Methods</h2>
-    <p class="tilt" data-tilt>UPI | BTC | LTC | ETH | SOL | XRP | TON | TRUMP | XMR | USDT (Any Network)</p>
-    <p>I’ll provide the address manually once we connect!</p>
+  <section id="testimonials" data-aos="fade-up">
+    <h2>💬 Testimonials</h2>
+    <div class="testimonial">"Vinit built our bot exactly as needed. Fast & reliable!" – Client A</div>
+    <div class="testimonial">"Super talented and easy to work with." – Client B</div>
   </section>
 
-  <!-- Contact -->
-  <section id="contact" data-aos="fade-left">
+  <section id="payments" data-aos="fade-up">
+    <h2>💸 Payment Methods</h2>
+    <p>I accept the following payment options:</p>
+    <div class="payment-methods">
+      <span>LTC</span>
+      <span>BTC</span>
+      <span>TON</span>
+      <span>USDT (All Networks)</span>
+      <span>ETH</span>
+      <span>SOL</span>
+      <span>TRUMP</span>
+      <span>XRP</span>
+      <span>Monero</span>
+    </div>
+  </section>
+
+  <section id="contact" data-aos="fade-up">
     <h2>📬 Contact Me</h2>
-    <p>Click below to message me directly:</p>
+    <p>DM me directly on Telegram or email me:</p>
     <div class="buttons">
       <a href="https://t.me/CarnageV1" class="telegram" target="_blank">💬 Telegram</a>
       <a href="mailto:vinit2712@aol.com" class="email">📧 Email</a>
     </div>
   </section>
 
-  <!-- Footer -->
+  <a href="#contact" class="floating-btn">Hire Me</a>
+
   <footer>
     <p>© 2025 Vinit. All rights reserved.</p>
   </footer>
 
-  <!-- Scripts -->
   <script>
-    // Typed animation
     new Typed("#typed-text", {
       strings: ["Vinit", "a Developer", "a Bot Builder", "a Web Wizard 💻", "your next hire 😉"],
       typeSpeed: 70,
       backSpeed: 40,
       loop: true
     });
-
-    // Particles
     particlesJS("particles-js", {
       "particles": {
         "number": { "value": 60 },
@@ -242,23 +238,7 @@
         }
       }
     });
-
-    // Toggle mode
-    function toggleMode() {
-      document.body.classList.toggle("dark");
-    }
-
-    // AOS init
     AOS.init();
-
-    // Tilt init
-    VanillaTilt.init(document.querySelectorAll(".tilt"), {
-      max: 15,
-      speed: 400,
-      glare: true,
-      "max-glare": 0.2
-    });
   </script>
-
 </body>
 </html>
