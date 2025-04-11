@@ -256,6 +256,28 @@
 <script>
   AOS.init({ duration: 1000 });
 </script>
+  <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
 
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyCf-6pDo5eo58MGc8OABC5ma6FjAyU-4Ng",
+    authDomain: "vinit-vouches.firebaseapp.com",
+    projectId: "vinit-vouches",
+    storageBucket: "vinit-vouches.firebasestorage.app",
+    messagingSenderId: "880866407024",
+    appId: "1:880866407024:web:a64eb48717e76d6a7b3ab5",
+    measurementId: "G-TXHJ4N9T9H"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
 </body>
 </html>
