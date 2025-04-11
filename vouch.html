@@ -23,7 +23,12 @@
     h1 {
       text-align: center;
       font-size: 2.5rem;
-      margin-bottom: 40px;
+      margin-bottom: 20px;
+    }
+
+    #authSection {
+      text-align: center;
+      margin-bottom: 30px;
     }
 
     .vouch-card {
@@ -46,6 +51,16 @@
       font-size: 1.1rem;
     }
 
+    .vouch-card button {
+      margin-top: 10px;
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
     #vouchForm {
       background: #151515;
       padding: 25px;
@@ -65,7 +80,7 @@
       font-size: 1rem;
     }
 
-    button {
+    button[type="submit"] {
       margin-top: 15px;
       width: 100%;
       padding: 12px;
@@ -78,7 +93,7 @@
       transition: background 0.3s ease;
     }
 
-    button:hover {
+    button[type="submit"]:hover {
       background: #00cfcf;
     }
 
@@ -128,6 +143,11 @@
 <div class="container">
   <h1 data-aos="fade-down">What People Say 💬</h1>
 
+  <div id="authSection" data-aos="fade-down">
+    <button onclick="signInWithGoogle()" style="background:#00ffe5;color:black;padding:10px 20px;border:none;border-radius:6px;cursor:pointer;font-weight:bold;">🔐 Sign in as Admin</button>
+    <span id="adminStatus" style="margin-left:15px;font-weight:bold;"></span>
+  </div>
+
   <div id="vouchList" data-aos="fade-up"></div>
 
   <form id="vouchForm" data-aos="zoom-in-up">
@@ -151,22 +171,20 @@
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
 
-<!-- AOS & Tilt -->
+<!-- AOS -->
 <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-<script>
-  AOS.init();
-</script>
+<script>AOS.init();</script>
 
+<!-- Main Script -->
 <script>
-  // Firebase config
   const firebaseConfig = {
-  apiKey: "AIzaSyCf-6pDo5eo58MGc8OABC5ma6FjAyU-4Ng",
-  authDomain: "vinit-vouches.firebaseapp.com",
-  databaseURL: "https://vinit-vouches-default-rtdb.firebaseio.com",
-  projectId: "vinit-vouches",
-  storageBucket: "vinit-vouches.appspot.com",
-  messagingSenderId: "880866407024",
-  appId: "1:880866407024:web:a64eb48717e76d6a7b3ab5"
+    apiKey: "AIzaSyCf-6pDo5eo58MGc8OABC5ma6FjAyU-4Ng",
+    authDomain: "vinit-vouches.firebaseapp.com",
+    databaseURL: "https://vinit-vouches-default-rtdb.firebaseio.com",
+    projectId: "vinit-vouches",
+    storageBucket: "vinit-vouches.appspot.com",
+    messagingSenderId: "880866407024",
+    appId: "1:880866407024:web:a64eb48717e76d6a7b3ab5"
   };
 
   const app = firebase.initializeApp(firebaseConfig);
@@ -177,6 +195,26 @@
   const vouchList = document.getElementById("vouchList");
   const vouchForm = document.getElementById("vouchForm");
 
+  const ADMIN_UID = "wrIo3ZbqF1VA7wD9DPrBezwvdFV2";
+  let isAdmin = false;
+
+  // Google Sign-In
+  function signInWithGoogle() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider)
+      .then((result) => {
+        if (result.user.uid === ADMIN_UID) {
+          isAdmin = true;
+          document.getElementById("adminStatus").innerText = "✔️ Admin Mode";
+          loadVouches();
+        } else {
+          alert("Access Denied: You are not the admin.");
+        }
+      }).catch((error) => {
+        console.error("Login failed:", error);
+      });
+  }
+
   // Submit vouch
   vouchForm.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -184,16 +222,13 @@
     const message = document.getElementById("message").value.trim();
     if (!username || !message) return;
 
-    firebase.database().ref("vouches").push({
-      username,
-      message
-    }).then(() => {
-      vouchForm.reset();
-      showSuccess();
-    }).catch(err => console.error("Error:", err));
+    firebase.database().ref("vouches").push({ username, message })
+      .then(() => {
+        vouchForm.reset();
+        showSuccess();
+      }).catch(err => console.error("Error:", err));
   });
 
-  // Show success popup
   function showSuccess() {
     const box = document.getElementById("successMsg");
     box.style.display = "flex";
@@ -204,19 +239,35 @@
     document.getElementById("successMsg").style.display = "none";
   }
 
-  // Display vouches
-  vouchRef.on("value", (snapshot) => {
-    vouchList.innerHTML = "";
-    snapshot.forEach((child) => {
-      const data = child.val();
-      const id = child.key;
+  function deleteVouch(id) {
+    if (confirm("Delete this vouch?")) {
+      firebase.database().ref("vouches/" + id).remove()
+        .then(() => console.log("Deleted:", id))
+        .catch(err => console.error("Delete failed:", err));
+    }
+  }
 
-      const div = document.createElement("div");
-      div.className = "vouch-card";
-      div.innerHTML = `<strong>${data.username}</strong><p>${data.message}</p>`;
-      vouchList.prepend(div);
+  function loadVouches() {
+    vouchRef.on("value", (snapshot) => {
+      vouchList.innerHTML = "";
+      snapshot.forEach((child) => {
+        const data = child.val();
+        const id = child.key;
+
+        const div = document.createElement("div");
+        div.className = "vouch-card";
+        div.innerHTML = `
+          <strong>${data.username}</strong>
+          <p>${data.message}</p>
+          ${isAdmin ? `<button onclick="deleteVouch('${id}')">🗑️ Delete</button>` : ""}
+        `;
+        vouchList.prepend(div);
+      });
     });
-  });
+  }
+
+  // Initial load for visitors (not admin)
+  loadVouches();
 </script>
 
 </body>
