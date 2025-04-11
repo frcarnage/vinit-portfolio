@@ -9,7 +9,7 @@
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #141e30, #243b55);
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
       color: white;
       overflow-x: hidden;
     }
@@ -27,32 +27,23 @@
     }
 
     .vouch-card {
-      background: #1a1a1a;
+      background: #1f1f1f;
       padding: 20px;
       margin-bottom: 20px;
       border-radius: 12px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-      transform-style: preserve-3d;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .vouch-card:hover {
-      transform: rotateY(5deg) rotateX(5deg);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+      animation: fadeIn 0.6s ease;
     }
 
     .vouch-card strong {
       color: #00ffe5;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
     }
 
-    .vouch-card p {
-      margin: 8px 0;
-    }
-
-    .vouch-card time {
-      font-size: 0.9rem;
-      color: #bbb;
+    .vouch-card .timestamp {
+      font-size: 0.85rem;
+      color: #ccc;
+      margin-top: 8px;
     }
 
     #vouchForm {
@@ -131,25 +122,41 @@
       font-size: 1.1rem;
     }
 
-    #loader {
+    .spinner {
       display: flex;
       justify-content: center;
       margin: 40px 0;
     }
 
-    .spinner {
-      width: 50px;
-      height: 50px;
-      border: 6px solid #00ffe5;
-      border-top-color: transparent;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
+    .spinner div {
+      width: 14px;
+      height: 14px;
+      margin: 3px;
+      background-color: #00ffe5;
+      border-radius: 100%;
+      display: inline-block;
+      animation: bouncedelay 1.4s infinite ease-in-out both;
     }
 
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
+    .spinner .bounce1 {
+      animation-delay: -0.32s;
+    }
+
+    .spinner .bounce2 {
+      animation-delay: -0.16s;
+    }
+
+    @keyframes bouncedelay {
+      0%, 80%, 100% {
+        transform: scale(0);
+      } 40% {
+        transform: scale(1.0);
       }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
@@ -158,11 +165,11 @@
 <div class="container">
   <h1 data-aos="fade-down">What People Say 💬</h1>
 
-  <div id="loader">
-    <div class="spinner"></div>
+  <div id="vouchList" class="spinner" data-aos="fade-up">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
   </div>
-
-  <div id="vouchList" data-aos="fade-up"></div>
 
   <form id="vouchForm" data-aos="zoom-in-up">
     <h2>Leave a Vouch</h2>
@@ -174,7 +181,6 @@
   <a class="back-home" href="index.html">← Back to Portfolio</a>
 </div>
 
-<!-- Success message -->
 <div id="successMsg" class="success-msg" style="display: none;">
   <span>✅ Vouch submitted!</span>
   <button class="close" onclick="hideSuccess()">×</button>
@@ -183,12 +189,9 @@
 <!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
-
-<!-- AOS -->
 <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 <script>AOS.init();</script>
 
-<!-- Main Script -->
 <script>
   const firebaseConfig = {
     apiKey: "AIzaSyCf-6pDo5eo58MGc8OABC5ma6FjAyU-4Ng",
@@ -207,31 +210,25 @@
   const vouchList = document.getElementById("vouchList");
   const vouchForm = document.getElementById("vouchForm");
 
-  function formatDate(timestamp) {
-    const date = new Date(timestamp);
-    return date.toLocaleString();
-  }
-
   vouchForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const username = document.getElementById("username").value.trim();
     const message = document.getElementById("message").value.trim();
-    const timestamp = Date.now();
+    const timestamp = new Date().toISOString();
 
     if (!username || !message) return;
 
-    vouchRef.push({ username, message, timestamp })
+    firebase.database().ref("vouches").push({ username, message, timestamp })
       .then(() => {
         vouchForm.reset();
         showSuccess();
-      })
-      .catch(err => console.error("Error:", err));
+      }).catch(err => console.error("Error:", err));
   });
 
   function showSuccess() {
     const box = document.getElementById("successMsg");
     box.style.display = "flex";
-    setTimeout(() => hideSuccess(), 2000);
+    setTimeout(() => hideSuccess(), 3000);
   }
 
   function hideSuccess() {
@@ -241,16 +238,20 @@
   function loadVouches() {
     vouchRef.on("value", (snapshot) => {
       vouchList.innerHTML = "";
-      document.getElementById("loader").style.display = "none";
+      if (!snapshot.exists()) {
+        vouchList.innerHTML = "<p>No vouches yet.</p>";
+        return;
+      }
 
       snapshot.forEach((child) => {
         const data = child.val();
+        const date = new Date(data.timestamp || Date.now());
         const div = document.createElement("div");
         div.className = "vouch-card";
         div.innerHTML = `
-          <strong>👤 Name:</strong> ${data.username}
+          <strong>🔹 Name: ${data.username}</strong>
           <p>💬 ${data.message}</p>
-          <time>📅 ${formatDate(data.timestamp)}</time>
+          <div class="timestamp">🕒 ${date.toLocaleString()}</div>
         `;
         vouchList.prepend(div);
       });
