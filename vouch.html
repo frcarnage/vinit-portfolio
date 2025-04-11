@@ -3,202 +3,163 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Vouches | Vinit</title>
-  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <title>Vouches</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: white;
-    }
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 40px 20px;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at top, #062f4f, #0b0b0b);
+      color: #fff;
+      text-align: center;
+      padding: 50px 20px;
     }
     h1 {
-      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
     }
     .vouch-card {
-      background: #1f1f1f;
+      background: #111;
       padding: 20px;
-      margin: 15px 0;
+      margin: 20px auto;
       border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+      max-width: 700px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      text-align: left;
+      line-height: 1.6;
     }
-    .vouch-card strong {
-      color: #00ffe5;
-    }
-    .vouch-card button {
-      background: red;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      margin-top: 10px;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-    #vouchForm {
-      background: #151515;
-      padding: 25px;
-      border-radius: 10px;
-      margin-top: 40px;
+    .form-container {
+      max-width: 600px;
+      background: #111;
+      margin: 30px auto;
+      padding: 20px;
+      border-radius: 12px;
     }
     input, textarea {
       width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      border-radius: 5px;
-      border: none;
-      background: #2c2c2c;
-      color: white;
-    }
-    button[type="submit"] {
-      width: 100%;
-      margin-top: 15px;
       padding: 12px;
-      background: #00ffe5;
+      margin: 10px 0;
+      border-radius: 8px;
       border: none;
+      background: #1e1e1e;
+      color: #fff;
+      font-size: 1rem;
+    }
+    button {
+      background: #00f0ff;
+      color: #000;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease;
+      width: 100%;
+    }
+    button:hover {
+      background: #00d0e0;
+    }
+    #successMessage {
+      background: #0f0;
+      color: #000;
+      padding: 10px;
       border-radius: 6px;
       font-weight: bold;
-      color: black;
-      cursor: pointer;
-    }
-    #loading {
-      text-align: center;
-      padding: 30px;
-    }
-    #successMsg {
+      margin: 10px 0;
       display: none;
       position: fixed;
       top: 20px;
       right: 20px;
-      background: #00ffcc;
-      color: black;
-      padding: 12px 20px;
-      border-radius: 10px;
-      font-weight: bold;
-      z-index: 1000;
+      z-index: 9999;
     }
   </style>
 </head>
 <body>
 
-<div class="container">
   <h1>💬 Vouches</h1>
 
-  <div id="authSection" style="text-align:center;margin-bottom:30px;">
-    <button onclick="signInWithGoogle()" style="padding:10px 20px;font-weight:bold;border:none;border-radius:6px;background:#00ffe5;color:black;">🔐 Sign in as Admin</button>
-    <span id="adminStatus" style="margin-left:15px;"></span>
-  </div>
+  <div id="vouch-container"></div>
 
-  <div id="loading">Loading vouches...</div>
-  <div id="vouchList" style="display:none;"></div>
-
-  <form id="vouchForm">
+  <div class="form-container">
     <h2>Leave a Vouch</h2>
     <input type="text" id="username" placeholder="Your name" required />
-    <textarea id="message" rows="4" placeholder="Your message..." required></textarea>
-    <button type="submit">Submit Vouch</button>
-  </form>
-</div>
+    <textarea id="message" placeholder="Your message..." rows="4" required></textarea>
+    <button onclick="submitVouch()">Submit Vouch</button>
+  </div>
 
-<div id="successMsg">✅ Vouch submitted!</div>
+  <div id="successMessage">✅ Vouch submitted!</div>
 
-<!-- Firebase v9 CDN -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-  import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
-  import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyCf-6pDo5eo58MGc8OABC5ma6FjAyU-4Ng",
-    authDomain: "vinit-vouches.firebaseapp.com",
-    databaseURL: "https://vinit-vouches-default-rtdb.firebaseio.com",
-    projectId: "vinit-vouches",
-    storageBucket: "vinit-vouches.appspot.com",
-    messagingSenderId: "880866407024",
-    appId: "1:880866407024:web:a64eb48717e76d6a7b3ab5"
-  };
+  <script>
+    // Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyBHpVKZ-NmN_aAkWfvOrHR1lMTKbGLuxOY",
+      authDomain: "vinit-vouches.firebaseapp.com",
+      databaseURL: "https://vinit-vouches-default-rtdb.firebaseio.com",
+      projectId: "vinit-vouches",
+      storageBucket: "vinit-vouches.appspot.com",
+      messagingSenderId: "496166275405",
+      appId: "1:496166275405:web:e13203786a2dfcd4bff683"
+    };
 
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-  const auth = getAuth(app);
-  const provider = new GoogleAuthProvider();
-  const vouchesRef = ref(db, "vouches");
-  const ADMIN_UID = "wrIo3ZbqF1VA7wD9DPrBezwvdFV2";
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    const vouchesRef = db.ref("vouches");
+    const vouchContainer = document.getElementById("vouch-container");
 
-  let isAdmin = false;
-
-  function signInWithGoogle() {
-    signInWithPopup(auth, provider)
-      .then(result => {
-        const user = result.user;
-        if (user.uid === ADMIN_UID) {
-          isAdmin = true;
-          document.getElementById("adminStatus").innerText = "✔️ Admin Mode";
-          loadVouches();
-        } else {
-          alert("Access Denied: Not admin.");
-        }
-      })
-      .catch(error => console.error(error));
-  }
-
-  // Load vouches
-  function loadVouches() {
-    onValue(vouchesRef, snapshot => {
-      const container = document.getElementById("vouchList");
-      container.innerHTML = "";
-      document.getElementById("loading").style.display = "none";
-      container.style.display = "block";
-
-      snapshot.forEach(child => {
-        const data = child.val();
-        const id = child.key;
-
-        const div = document.createElement("div");
-        div.className = "vouch-card";
-        div.innerHTML = `
-          <strong>${data.username}</strong>
-          <p>${data.message}</p>
-          ${isAdmin ? `<button onclick="deleteVouch('${id}')">🗑️ Delete</button>` : ""}
-        `;
-        container.prepend(div);
+    // Load existing vouches
+    vouchesRef.on("child_added", function (snapshot) {
+      const vouch = snapshot.val();
+      const timestamp = new Date(vouch.timestamp || Date.now());
+      const formattedDate = timestamp.toLocaleString("en-IN", {
+        day: "2-digit", month: "short", year: "numeric",
+        hour: "2-digit", minute: "2-digit"
       });
+
+      const card = document.createElement("div");
+      card.className = "vouch-card";
+      card.innerHTML = `
+        <p><strong>👤 Name:</strong> ${vouch.username}</p>
+        <p><strong>💬 Vouch:</strong> ${vouch.message}</p>
+        <p><strong>🕒 Date:</strong> ${formattedDate}</p>
+      `;
+      vouchContainer.prepend(card);
     });
-  }
 
-  // Always load vouches for visitors
-  loadVouches();
+    // Submit new vouch
+    function submitVouch() {
+      const username = document.getElementById("username").value.trim();
+      const message = document.getElementById("message").value.trim();
+      if (!username || !message) return alert("Please fill out both fields!");
 
-  // Submit vouch
-  document.getElementById("vouchForm").addEventListener("submit", (e) => {
-    e.preventDefault();
-    const username = document.getElementById("username").value.trim();
-    const message = document.getElementById("message").value.trim();
-    if (!username || !message) return;
+      const newVouch = {
+        username,
+        message,
+        timestamp: Date.now()
+      };
 
-    push(vouchesRef, { username, message })
-      .then(() => {
-        document.getElementById("vouchForm").reset();
-        showSuccess();
+      vouchesRef.push(newVouch).then(() => {
+        document.getElementById("username").value = "";
+        document.getElementById("message").value = "";
+        showSuccessMessage();
       });
-  });
-
-  function deleteVouch(id) {
-    if (confirm("Delete this vouch?")) {
-      remove(ref(db, "vouches/" + id));
     }
-  }
 
-  function showSuccess() {
-    const msg = document.getElementById("successMsg");
-    msg.style.display = "block";
-    setTimeout(() => msg.style.display = "none", 2000);
-  }
-</script>
-
+    // Show success toast
+    function showSuccessMessage() {
+      const msg = document.getElementById("successMessage");
+      msg.style.display = "block";
+      setTimeout(() => {
+        msg.style.display = "none";
+      }, 2000);
+    }
+  </script>
 </body>
 </html>
