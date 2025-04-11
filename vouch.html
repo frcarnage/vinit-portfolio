@@ -11,179 +11,107 @@
       font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
       color: white;
-      overflow-x: hidden;
     }
-
     .container {
-      max-width: 1000px;
+      max-width: 900px;
       margin: auto;
       padding: 40px 20px;
     }
-
     h1 {
       text-align: center;
-      font-size: 2.5rem;
-      margin-bottom: 20px;
     }
-
-    #authSection {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
     .vouch-card {
       background: #1f1f1f;
       padding: 20px;
-      margin-bottom: 20px;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin: 15px 0;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.4);
     }
-
-    .vouch-card:hover {
-      transform: rotateY(3deg) rotateX(3deg);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.6);
-    }
-
     .vouch-card strong {
       color: #00ffe5;
-      font-size: 1.1rem;
     }
-
     .vouch-card button {
-      margin-top: 10px;
-      background: #ff4d4d;
+      background: red;
       color: white;
       border: none;
-      padding: 6px 10px;
-      border-radius: 5px;
+      padding: 5px 10px;
+      margin-top: 10px;
       cursor: pointer;
+      border-radius: 5px;
     }
-
     #vouchForm {
       background: #151515;
       padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-      margin-top: 50px;
+      border-radius: 10px;
+      margin-top: 40px;
     }
-
     input, textarea {
       width: 100%;
-      padding: 12px;
+      padding: 10px;
       margin-top: 10px;
+      border-radius: 5px;
       border: none;
-      border-radius: 8px;
       background: #2c2c2c;
       color: white;
-      font-size: 1rem;
     }
-
     button[type="submit"] {
-      margin-top: 15px;
       width: 100%;
+      margin-top: 15px;
       padding: 12px;
       background: #00ffe5;
       border: none;
-      border-radius: 8px;
+      border-radius: 6px;
       font-weight: bold;
       color: black;
       cursor: pointer;
-      transition: background 0.3s ease;
     }
-
-    button[type="submit"]:hover {
-      background: #00cfcf;
+    #loading {
+      text-align: center;
+      padding: 30px;
     }
-
-    .success-msg {
+    #successMsg {
+      display: none;
       position: fixed;
       top: 20px;
       right: 20px;
       background: #00ffcc;
       color: black;
-      padding: 15px 20px;
+      padding: 12px 20px;
       border-radius: 10px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      font-weight: bold;
       z-index: 1000;
-      animation: fadeOut 2s ease 2s forwards;
-    }
-
-    .success-msg .close {
-      background: none;
-      border: none;
-      font-size: 1.2rem;
-      cursor: pointer;
-    }
-
-    @keyframes fadeOut {
-      to {
-        opacity: 0;
-        transform: translateY(-10px);
-        visibility: hidden;
-      }
-    }
-
-    .back-home {
-      display: block;
-      text-align: center;
-      margin-top: 40px;
-      color: #00ffe5;
-      text-decoration: none;
-      font-size: 1.1rem;
-    }
-
-    #loading {
-      text-align: center;
-      padding: 40px 0;
-      font-size: 1.2rem;
-      color: #ccc;
     }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <h1 data-aos="fade-down">What People Say 💬</h1>
+  <h1>💬 Vouches</h1>
 
-  <div id="authSection" data-aos="fade-down">
-    <button onclick="signInWithGoogle()" style="background:#00ffe5;color:black;padding:10px 20px;border:none;border-radius:6px;cursor:pointer;font-weight:bold;">🔐 Sign in as Admin</button>
-    <span id="adminStatus" style="margin-left:15px;font-weight:bold;"></span>
+  <div id="authSection" style="text-align:center;margin-bottom:30px;">
+    <button onclick="signInWithGoogle()" style="padding:10px 20px;font-weight:bold;border:none;border-radius:6px;background:#00ffe5;color:black;">🔐 Sign in as Admin</button>
+    <span id="adminStatus" style="margin-left:15px;"></span>
   </div>
 
   <div id="loading">Loading vouches...</div>
-  <div id="vouchList" data-aos="fade-up" style="display:none;"></div>
+  <div id="vouchList" style="display:none;"></div>
 
-  <form id="vouchForm" data-aos="zoom-in-up">
+  <form id="vouchForm">
     <h2>Leave a Vouch</h2>
     <input type="text" id="username" placeholder="Your name" required />
     <textarea id="message" rows="4" placeholder="Your message..." required></textarea>
     <button type="submit">Submit Vouch</button>
   </form>
-
-  <a class="back-home" href="index.html">← Back to Portfolio</a>
 </div>
 
-<!-- Success Message -->
-<div id="successMsg" class="success-msg" style="display: none;">
-  <span>✅ Vouch submitted!</span>
-  <button class="close" onclick="hideSuccess()">×</button>
-</div>
+<div id="successMsg">✅ Vouch submitted!</div>
 
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+<!-- Firebase v9 CDN -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+  import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+  import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
-<!-- AOS -->
-<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-<script>AOS.init();</script>
-
-<!-- Vouch Logic -->
-<script>
   const firebaseConfig = {
     apiKey: "AIzaSyCf-6pDo5eo58MGc8OABC5ma6FjAyU-4Ng",
     authDomain: "vinit-vouches.firebaseapp.com",
@@ -194,73 +122,39 @@
     appId: "1:880866407024:web:a64eb48717e76d6a7b3ab5"
   };
 
-  const app = firebase.initializeApp(firebaseConfig);
-  const database = firebase.database();
-  const auth = firebase.auth();
-  const vouchRef = database.ref("vouches");
-
-  const vouchList = document.getElementById("vouchList");
-  const vouchForm = document.getElementById("vouchForm");
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+  const vouchesRef = ref(db, "vouches");
   const ADMIN_UID = "wrIo3ZbqF1VA7wD9DPrBezwvdFV2";
 
   let isAdmin = false;
 
-  // Google Sign-In
   function signInWithGoogle() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider)
-      .then((result) => {
-        if (result.user.uid === ADMIN_UID) {
+    signInWithPopup(auth, provider)
+      .then(result => {
+        const user = result.user;
+        if (user.uid === ADMIN_UID) {
           isAdmin = true;
           document.getElementById("adminStatus").innerText = "✔️ Admin Mode";
           loadVouches();
         } else {
-          alert("Access Denied: You are not the admin.");
+          alert("Access Denied: Not admin.");
         }
-      }).catch((error) => {
-        console.error("Login failed:", error);
-      });
+      })
+      .catch(error => console.error(error));
   }
 
-  // Submit vouch
-  vouchForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const username = document.getElementById("username").value.trim();
-    const message = document.getElementById("message").value.trim();
-    if (!username || !message) return;
-
-    firebase.database().ref("vouches").push({ username, message })
-      .then(() => {
-        vouchForm.reset();
-        showSuccess();
-      }).catch(err => console.error("Error:", err));
-  });
-
-  function showSuccess() {
-    const box = document.getElementById("successMsg");
-    box.style.display = "flex";
-    setTimeout(() => hideSuccess(), 2000);
-  }
-
-  function hideSuccess() {
-    document.getElementById("successMsg").style.display = "none";
-  }
-
-  function deleteVouch(id) {
-    if (confirm("Delete this vouch?")) {
-      firebase.database().ref("vouches/" + id).remove()
-        .then(() => console.log("Deleted:", id))
-        .catch(err => console.error("Delete failed:", err));
-    }
-  }
-
+  // Load vouches
   function loadVouches() {
-    vouchRef.on("value", (snapshot) => {
-      vouchList.innerHTML = "";
+    onValue(vouchesRef, snapshot => {
+      const container = document.getElementById("vouchList");
+      container.innerHTML = "";
       document.getElementById("loading").style.display = "none";
-      vouchList.style.display = "block";
+      container.style.display = "block";
 
-      snapshot.forEach((child) => {
+      snapshot.forEach(child => {
         const data = child.val();
         const id = child.key;
 
@@ -271,13 +165,39 @@
           <p>${data.message}</p>
           ${isAdmin ? `<button onclick="deleteVouch('${id}')">🗑️ Delete</button>` : ""}
         `;
-        vouchList.prepend(div);
+        container.prepend(div);
       });
     });
   }
 
-  // Initial load for non-admin
+  // Always load vouches for visitors
   loadVouches();
+
+  // Submit vouch
+  document.getElementById("vouchForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const username = document.getElementById("username").value.trim();
+    const message = document.getElementById("message").value.trim();
+    if (!username || !message) return;
+
+    push(vouchesRef, { username, message })
+      .then(() => {
+        document.getElementById("vouchForm").reset();
+        showSuccess();
+      });
+  });
+
+  function deleteVouch(id) {
+    if (confirm("Delete this vouch?")) {
+      remove(ref(db, "vouches/" + id));
+    }
+  }
+
+  function showSuccess() {
+    const msg = document.getElementById("successMsg");
+    msg.style.display = "block";
+    setTimeout(() => msg.style.display = "none", 2000);
+  }
 </script>
 
 </body>
