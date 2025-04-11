@@ -4,213 +4,242 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Vouches | Vinit</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"/>
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      font-family: 'Poppins', sans-serif;
+      background: #121212;
       color: #fff;
-      overflow-x: hidden;
     }
 
-    .container {
-      max-width: 800px;
-      margin: auto;
+    .vouch-section {
       padding: 40px 20px;
-      text-align: center;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      min-height: 100vh;
     }
 
     h1 {
+      text-align: center;
       font-size: 2.5rem;
-      margin-bottom: 20px;
-      color: #00f5ff;
+      margin-bottom: 30px;
+      color: #ffffff;
     }
 
-    .swiper {
-      padding: 20px 0;
-    }
-
-    .vouch-card {
-      background: #121212;
-      border-radius: 12px;
+    .vouch-form {
+      max-width: 500px;
+      margin: 0 auto 40px;
+      background: rgba(255, 255, 255, 0.05);
       padding: 20px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
     }
 
-    .vouch-card h3 {
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      background: #1e1e1e;
+      color: #fff;
+      outline: none;
+    }
+
+    input:focus, textarea:focus {
+      box-shadow: 0 0 10px cyan;
+    }
+
+    button {
+      background: #00ffff;
+      color: #000;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: #00cccc;
+    }
+
+    .vouch-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .vouch {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.05);
+      transition: transform 0.3s ease;
+    }
+
+    .vouch:hover {
+      transform: translateY(-5px) scale(1.02);
+    }
+
+    .vouch h3 {
       margin: 0 0 10px;
       font-size: 1.2rem;
-      color: #00f5ff;
+      color: #00ffff;
     }
 
-    .vouch-card p {
+    .vouch p {
       margin: 5px 0;
     }
 
-    .vouch-card .date {
+    .timestamp {
       font-size: 0.9rem;
-      color: #aaa;
+      color: #ccc;
     }
 
     .like-btn {
-      background: #00f5ff;
-      color: #000;
+      background: none;
       border: none;
-      padding: 6px 12px;
-      border-radius: 20px;
+      color: #00ffff;
+      font-size: 1rem;
       cursor: pointer;
       margin-top: 10px;
+      transition: all 0.3s ease;
     }
 
-    .form-container {
-      margin-top: 50px;
-      background: #121212;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0,255,255,0.3);
+    .like-btn:hover {
+      transform: scale(1.1);
     }
 
-    .form-container input,
-    .form-container textarea {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border: none;
-      border-radius: 6px;
-      background: #1f1f1f;
-      color: #fff;
+    .like-btn.liked {
+      color: #ff4f91;
+      animation: pop 0.3s ease;
     }
 
-    .form-container button {
-      background: #00f5ff;
-      border: none;
-      color: #000;
-      padding: 10px 20px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
+    @keyframes pop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+      100% { transform: scale(1); }
+    }
+
+    #loading {
+      text-align: center;
+      margin-top: 40px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>💬 Vouches</h1>
 
-    <!-- Vouch Display Slider -->
-    <div class="swiper">
-      <div class="swiper-wrapper" id="vouchSlider">
-        <!-- Vouches will load here -->
-      </div>
-    </div>
+<div class="vouch-section">
+  <h1>What People Say 💬</h1>
 
-    <!-- Leave a Vouch -->
-    <div class="form-container">
-      <h2>Leave a Vouch</h2>
-      <input type="text" id="username" placeholder="Your name" />
-      <textarea id="message" rows="4" placeholder="Your message..."></textarea>
-      <button onclick="submitVouch()">Submit Vouch</button>
-    </div>
+  <div class="vouch-form">
+    <input type="text" id="username" placeholder="Your Name" />
+    <textarea id="message" placeholder="Your Vouch..." rows="4"></textarea>
+    <button onclick="submitVouch()">Submit Vouch</button>
   </div>
 
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+  <div id="vouchList" class="vouch-container"></div>
+  <div id="loading">⏳ Loading vouches...</div>
+</div>
 
-  <!-- SwiperJS -->
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
 
-  <script>
-    // ✅ Your real Firebase config
-    const firebaseConfig = {
-      apiKey: "AIzaSyD2K9DlaNBL5AM05wZLdOTvoFnZqGOdUnA",
-      authDomain: "vinit-vouches.firebaseapp.com",
-      projectId: "vinit-vouches",
-      storageBucket: "vinit-vouches.appspot.com",
-      messagingSenderId: "yourSenderID",
-      appId: "yourAppID",
-      databaseURL: "https://vinit-vouches-default-rtdb.firebaseio.com"
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyD2...yourKeyHere",
+    authDomain: "vinit-vouches.firebaseapp.com",
+    projectId: "vinit-vouches",
+    storageBucket: "vinit-vouches.appspot.com",
+    messagingSenderId: "yourSenderID",
+    appId: "yourAppID",
+    databaseURL: "https://vinit-vouches-default-rtdb.firebaseio.com"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  function submitVouch() {
+    const username = document.getElementById('username').value.trim();
+    const message = document.getElementById('message').value.trim();
+    if (!username || !message) return alert("Please fill all fields");
+
+    const vouch = {
+      username,
+      message,
+      timestamp: new Date().toISOString(),
+      likes: 0
     };
 
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
+    db.ref("vouches").push(vouch);
+    document.getElementById('username').value = "";
+    document.getElementById('message').value = "";
+    alert("✅ Vouch submitted!");
+  }
 
-    function formatDateTime(timestamp) {
-      const date = new Date(timestamp);
-      return date.toLocaleString();
+  function formatTimestamp(iso) {
+    const date = new Date(iso);
+    return `${date.toLocaleDateString()} ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+  }
+
+  function renderVouches() {
+    db.ref("vouches").on("value", (snapshot) => {
+      const vouchList = document.getElementById("vouchList");
+      const loading = document.getElementById("loading");
+      vouchList.innerHTML = "";
+      loading.style.display = "none";
+
+      const data = snapshot.val();
+      if (data) {
+        const entries = Object.entries(data).reverse();
+
+        entries.forEach(([id, vouch]) => {
+          const div = document.createElement("div");
+          div.className = "vouch";
+
+          const likedKey = `liked_${id}`;
+          const isLiked = localStorage.getItem(likedKey);
+
+          const likeCount = vouch.likes !== undefined ? vouch.likes : 0;
+
+          div.innerHTML = `
+            <h3>Name: ${vouch.username}</h3>
+            <p>Vouch: ${vouch.message}</p>
+            <p class="timestamp">🕒 ${formatTimestamp(vouch.timestamp)}</p>
+            <button class="like-btn ${isLiked ? 'liked' : ''}" onclick="likeVouch('${id}')">
+              ❤️ <span id="like-count-${id}">${likeCount}</span>
+            </button>
+          `;
+
+          vouchList.appendChild(div);
+        });
+      }
+    });
+  }
+
+  function likeVouch(id) {
+    const likedKey = `liked_${id}`;
+    if (localStorage.getItem(likedKey)) return;
+
+    const likeCountSpan = document.getElementById(`like-count-${id}`);
+    if (likeCountSpan) {
+      let currentLikes = parseInt(likeCountSpan.textContent) || 0;
+      likeCountSpan.textContent = currentLikes + 1;
+      likeCountSpan.parentElement.classList.add("liked");
     }
 
-    function submitVouch() {
-      const username = document.getElementById("username").value.trim();
-      const message = document.getElementById("message").value.trim();
-      if (!username || !message) return alert("Please fill all fields");
+    localStorage.setItem(likedKey, "true");
+    const ref = db.ref("vouches/" + id + "/likes");
+    ref.transaction((likes) => (likes || 0) + 1);
+  }
 
-      const vouch = {
-        username,
-        message,
-        timestamp: Date.now(),
-        likes: 0
-      };
-
-      db.ref("vouches").push(vouch).then(() => {
-        alert("✅ Vouch submitted!");
-        document.getElementById("username").value = "";
-        document.getElementById("message").value = "";
-        loadVouches(); // reload
-      });
-    }
-
-    function loadVouches() {
-      db.ref("vouches").once("value", (snapshot) => {
-        const data = snapshot.val();
-        const container = document.getElementById("vouchSlider");
-        container.innerHTML = "";
-
-        if (data) {
-          const vouchArray = Object.entries(data).reverse();
-          vouchArray.forEach(([id, v]) => {
-            const liked = localStorage.getItem(`liked_${id}`) === "true";
-            const vouchHTML = `
-              <div class="swiper-slide">
-                <div class="vouch-card">
-                  <h3>👤 ${v.username}</h3>
-                  <p>💬 ${v.message}</p>
-                  <p class="date">📅 ${formatDateTime(v.timestamp)}</p>
-                  <button class="like-btn" onclick="likeVouch('${id}', ${v.likes})" ${liked ? "disabled" : ""}>
-                    ❤️ ${v.likes} Like${v.likes === 1 ? "" : "s"}
-                  </button>
-                </div>
-              </div>`;
-            container.innerHTML += vouchHTML;
-          });
-
-          new Swiper('.swiper', {
-            slidesPerView: 1,
-            spaceBetween: 20,
-            loop: true,
-            autoplay: {
-              delay: 4000,
-              disableOnInteraction: false,
-            },
-            pagination: {
-              el: '.swiper-pagination',
-              clickable: true,
-            }
-          });
-        } else {
-          container.innerHTML = `<p>No vouches yet.</p>`;
-        }
-      });
-    }
-
-    function likeVouch(id, currentLikes) {
-      if (localStorage.getItem(`liked_${id}`)) return;
-      db.ref("vouches/" + id + "/likes").set(currentLikes + 1);
-      localStorage.setItem(`liked_${id}`, "true");
-      loadVouches(); // reload to show updated likes
-    }
-
-    loadVouches();
-  </script>
+  renderVouches();
+</script>
 </body>
 </html>
