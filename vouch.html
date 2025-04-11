@@ -37,12 +37,11 @@
       margin-bottom: 20px;
       border-radius: 12px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-      transform-style: preserve-3d;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .vouch-card:hover {
-      transform: rotateY(5deg) rotateX(5deg);
+      transform: rotateY(3deg) rotateX(3deg);
       box-shadow: 0 12px 30px rgba(0,0,0,0.6);
     }
 
@@ -136,6 +135,13 @@
       text-decoration: none;
       font-size: 1.1rem;
     }
+
+    #loading {
+      text-align: center;
+      padding: 40px 0;
+      font-size: 1.2rem;
+      color: #ccc;
+    }
   </style>
 </head>
 <body>
@@ -148,7 +154,8 @@
     <span id="adminStatus" style="margin-left:15px;font-weight:bold;"></span>
   </div>
 
-  <div id="vouchList" data-aos="fade-up"></div>
+  <div id="loading">Loading vouches...</div>
+  <div id="vouchList" data-aos="fade-up" style="display:none;"></div>
 
   <form id="vouchForm" data-aos="zoom-in-up">
     <h2>Leave a Vouch</h2>
@@ -160,13 +167,13 @@
   <a class="back-home" href="index.html">← Back to Portfolio</a>
 </div>
 
-<!-- Success message -->
+<!-- Success Message -->
 <div id="successMsg" class="success-msg" style="display: none;">
   <span>✅ Vouch submitted!</span>
   <button class="close" onclick="hideSuccess()">×</button>
 </div>
 
-<!-- Firebase -->
+<!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
@@ -175,7 +182,7 @@
 <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 <script>AOS.init();</script>
 
-<!-- Main Script -->
+<!-- Vouch Logic -->
 <script>
   const firebaseConfig = {
     apiKey: "AIzaSyCf-6pDo5eo58MGc8OABC5ma6FjAyU-4Ng",
@@ -188,14 +195,14 @@
   };
 
   const app = firebase.initializeApp(firebaseConfig);
-  const database = firebase.database(app);
+  const database = firebase.database();
   const auth = firebase.auth();
   const vouchRef = database.ref("vouches");
 
   const vouchList = document.getElementById("vouchList");
   const vouchForm = document.getElementById("vouchForm");
-
   const ADMIN_UID = "wrIo3ZbqF1VA7wD9DPrBezwvdFV2";
+
   let isAdmin = false;
 
   // Google Sign-In
@@ -250,6 +257,9 @@
   function loadVouches() {
     vouchRef.on("value", (snapshot) => {
       vouchList.innerHTML = "";
+      document.getElementById("loading").style.display = "none";
+      vouchList.style.display = "block";
+
       snapshot.forEach((child) => {
         const data = child.val();
         const id = child.key;
@@ -266,7 +276,7 @@
     });
   }
 
-  // Initial load for visitors (not admin)
+  // Initial load for non-admin
   loadVouches();
 </script>
 
