@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Vouches | Vinit</title>
-  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"/>
   <style>
     body {
@@ -20,47 +19,55 @@
       margin: 40px 0 20px;
     }
 
-    .admin-btn {
-      display: block;
-      margin: 0 auto 20px;
-      background-color: aqua;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease-in-out;
-    }
-
-    .admin-btn:hover {
-      background-color: #00f7ff;
-      transform: scale(1.05);
+    #vouchesContainer {
+      display: flex;
+      overflow-x: auto;
+      gap: 20px;
+      scroll-behavior: smooth;
+      padding: 40px 20px;
     }
 
     .vouch-card {
-      background-color: #111;
-      margin: 20px auto;
+      background-color: #121212;
+      flex: 0 0 300px;
       padding: 20px;
       border-radius: 12px;
-      max-width: 700px;
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
-      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
     }
 
     .vouch-card:hover {
-      transform: scale(1.01);
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+      transform: scale(1.03);
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
     }
 
     .vouch-meta {
       font-size: 14px;
       color: #aaa;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .vouch-message {
       font-size: 16px;
       white-space: pre-wrap;
+    }
+
+    .like-btn {
+      cursor: pointer;
+      margin-top: 10px;
+      font-size: 14px;
+      color: cyan;
+      border: 1px solid cyan;
+      padding: 6px 12px;
+      border-radius: 8px;
+      background: transparent;
+      transition: 0.2s ease;
+    }
+
+    .like-btn:hover {
+      background: cyan;
+      color: black;
     }
 
     form {
@@ -69,7 +76,7 @@
       background-color: #111;
       padding: 25px;
       border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.15);
     }
 
     form h2 {
@@ -123,11 +130,21 @@
       right: 10px;
       cursor: pointer;
     }
+
+    @media (max-width: 600px) {
+      #vouchesContainer {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .vouch-card {
+        width: 90%;
+      }
+    }
   </style>
 </head>
 <body>
   <h1>💬 Vouches</h1>
-  <button class="admin-btn" onclick="signIn()">🎁 Sign in as Admin</button>
 
   <div id="success" class="success-message">
     ✅ Vouch submitted!
@@ -145,7 +162,6 @@
 
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyCRY-Wbtztw_JIL0Lsl3E20q4AfRGiy2d8",
@@ -159,13 +175,7 @@
 
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
-    const auth = firebase.auth();
     const vouchesRef = db.ref("vouches");
-
-    function signIn() {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      auth.signInWithPopup(provider);
-    }
 
     function showSuccessMessage() {
       const successBox = document.getElementById("success");
@@ -183,7 +193,8 @@
       const newVouch = {
         username,
         message,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        likes: 0
       };
 
       vouchesRef.push(newVouch).then(() => {
@@ -191,6 +202,11 @@
         document.getElementById("message").value = "";
         showSuccessMessage();
       });
+    }
+
+    function likeVouch(id, currentLikes) {
+      const newLikes = currentLikes + 1;
+      vouchesRef.child(id).update({ likes: newLikes });
     }
 
     vouchesRef.on("value", (snapshot) => {
@@ -202,7 +218,7 @@
         return;
       }
 
-      const entries = Object.entries(vouches).reverse(); // show latest first
+      const entries = Object.entries(vouches).reverse();
       entries.forEach(([id, vouch]) => {
         const card = document.createElement("div");
         card.className = "vouch-card";
@@ -218,10 +234,19 @@
           <div class="vouch-meta"><strong>👤 ${vouch.username}</strong></div>
           <div class="vouch-message">"${vouch.message}"</div>
           <div class="vouch-meta">${formattedDate}</div>
+          <button class="like-btn" onclick="likeVouch('${id}', ${vouch.likes || 0})">❤️ ${vouch.likes || 0} Like${(vouch.likes || 0) !== 1 ? 's' : ''}</button>
         `;
         container.appendChild(card);
       });
     });
+
+    // Optional: Auto scroll slider every 5s (only on wide screens)
+    if (window.innerWidth > 600) {
+      setInterval(() => {
+        const container = document.getElementById("vouchesContainer");
+        container.scrollBy({ left: 320, behavior: 'smooth' });
+      }, 5000);
+    }
   </script>
 </body>
 </html>
