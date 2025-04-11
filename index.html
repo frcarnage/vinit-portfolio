@@ -160,64 +160,64 @@
       text-align: center;
       padding: 20px;
       margin-top: 50px;
-      #vouches {
-  background: #fff;
-  padding: 60px 20px;
-  text-align: center;
-}
-#vouchForm {
-  margin-bottom: 30px;
-}
-#vouchForm input,
-#vouchForm textarea {
-  width: 80%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #aaa;
-  border-radius: 6px;
-  font-size: 1rem;
-}
-#vouchForm button {
-  background: #2c5364;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-}
-#vouchForm button:hover {
-  background: #203a43;
-}
-#vouchList {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  max-width: 700px;
-  margin: 0 auto;
-}
-.vouch-item {
-  background: #f4f4f4;
-  padding: 15px;
-  border-radius: 8px;
-  position: relative;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-}
-.vouch-item strong {
-  display: block;
-  font-size: 1.1em;
-  margin-bottom: 6px;
-}
-.delete-btn {
-  position: absolute;
-  top: 8px;
-  right: 10px;
-  color: red;
-  cursor: pointer;
-  font-weight: bold;
-}
+    }
 
+    #vouches {
+      background: #fff;
+      padding: 60px 20px;
+      text-align: center;
+    }
+    #vouchForm {
+      margin-bottom: 30px;
+    }
+    #vouchForm input,
+    #vouchForm textarea {
+      width: 80%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #aaa;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    #vouchForm button {
+      background: #2c5364;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    #vouchForm button:hover {
+      background: #203a43;
+    }
+    #vouchList {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .vouch-item {
+      background: #f4f4f4;
+      padding: 15px;
+      border-radius: 8px;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .vouch-item strong {
+      display: block;
+      font-size: 1.1em;
+      margin-bottom: 6px;
+    }
+    .delete-btn {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      color: red;
+      cursor: pointer;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -271,6 +271,7 @@
     <a href="mailto:vinit2712@aol.com" class="email">📧 Email</a>
   </div>
 </section>
+
 <section id="vouches">
   <h2>💬 Testimonials</h2>
   <form id="vouchForm">
@@ -314,7 +315,6 @@
     }
   });
 
-  // Dark Mode Toggle
   document.getElementById('toggle-mode').onclick = () => {
     document.body.classList.toggle('dark-mode');
   }
@@ -323,30 +323,8 @@
 <script>
   AOS.init({ duration: 1000 });
 </script>
-  <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
 
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyCf-6pDo5eo58MGc8OABC5ma6FjAyU-4Ng",
-    authDomain: "vinit-vouches.firebaseapp.com",
-    projectId: "vinit-vouches",
-    storageBucket: "vinit-vouches.firebasestorage.app",
-    messagingSenderId: "880866407024",
-    appId: "1:880866407024:web:a64eb48717e76d6a7b3ab5",
-    measurementId: "G-TXHJ4N9T9H"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-</script>
-  <!-- Firebase SDKs -->
+<!-- Firebase & Vouch Logic -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
   import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
@@ -365,19 +343,16 @@
   const db = getDatabase(app);
   const vouchRef = ref(db, "vouches");
 
-  // Submit handler
   document.getElementById("vouchForm").addEventListener("submit", (e) => {
     e.preventDefault();
     const username = document.getElementById("username").value.trim();
     const message = document.getElementById("message").value.trim();
-
     if (username && message) {
       push(vouchRef, { username, message });
       document.getElementById("vouchForm").reset();
     }
   });
 
-  // Real-time listener
   onValue(vouchRef, (snapshot) => {
     const vouchList = document.getElementById("vouchList");
     vouchList.innerHTML = "";
@@ -394,7 +369,6 @@
     });
   });
 
-  // Deletion
   window.deleteVouch = (key) => {
     if (confirm("Delete this vouch?")) {
       remove(ref(db, `vouches/${key}`));
