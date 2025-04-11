@@ -1,6 +1,3 @@
-<!-- REPLACE YOUR EXISTING index.html WITH THIS FULL CODE -->
-<!-- I've only modified two parts: navbar and hero section -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -112,19 +109,24 @@
     }
 
     .hero-btn {
-      margin-top: 30px;
-      background-color: #00ffd5;
-      color: #000;
-      padding: 12px 24px;
+      display: inline-block;
+      margin-top: 25px;
+      padding: 12px 28px;
+      font-size: 1rem;
+      border: none;
       border-radius: 8px;
-      font-weight: bold;
+      cursor: pointer;
       text-decoration: none;
+      background: #00ffd5;
+      color: #000;
+      font-weight: bold;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
       transition: all 0.3s ease;
     }
 
     .hero-btn:hover {
       transform: scale(1.05);
-      background-color: #00d2b2;
+      background: #00d2b2;
     }
 
     section {
@@ -202,9 +204,6 @@
   <div id="hero-content">
     <h1>Hi, I'm</h1>
     <h2 id="typed-text"></h2>
-
-    <!-- ✅ HERO CTA BUTTON FOR VOUCH -->
-    <a href="vouch.html" class="hero-btn">💬 Leave a Vouch</a>
   </div>
 </div>
 
@@ -233,6 +232,13 @@
     <div class="pay-option">TON</div>
     <div class="pay-option">Monero</div>
   </div>
+</section>
+
+<!-- ✅ NEW VOUCH SECTION BEFORE CONTACT -->
+<section id="vouch" data-aos="fade-up">
+  <h2>💬 Leave a Vouch</h2>
+  <p>If I’ve worked with you, I’d love a quick testimonial!</p>
+  <a href="vouch.html" class="hero-btn">💬 Leave a Vouch</a>
 </section>
 
 <section id="contact" data-aos="zoom-in">
