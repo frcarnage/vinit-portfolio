@@ -1,196 +1,213 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Vinit | Developer Portfolio</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.ico" />
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
+      margin: 0;
       font-family: 'Poppins', sans-serif;
-      background: #0d1b2a;
+      background: #0c0c0c;
       color: #fff;
-      line-height: 1.6;
+      overflow-x: hidden;
     }
-    header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: #1b263b;
-      padding: 10px 0;
-      z-index: 1000;
-    }
+
     nav {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 20px;
+      background: rgba(0,0,0,0.8);
+      z-index: 999;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
     }
-    nav .logo { font-size: 1.5rem; font-weight: bold; color: cyan; }
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 20px;
-    }
-    nav ul li a {
+
+    nav a {
       color: #fff;
+      margin: 0 1rem;
       text-decoration: none;
-      transition: 0.3s;
+      font-weight: 600;
+      transition: 0.3s ease;
     }
-    nav ul li a:hover { color: cyan; }
+
+    nav a:hover {
+      color: #00f7ff;
+    }
+
+    header {
+      height: 100vh;
+      background: url('bg3d.png') no-repeat center center/cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .typed-text {
+      font-size: 2rem;
+      color: #00f7ff;
+    }
 
     section {
-      padding: 100px 20px;
-      max-width: 1000px;
-      margin: 0 auto;
+      padding: 4rem 2rem;
+      max-width: 1100px;
+      margin: auto;
     }
 
-    #hero { text-align: center; margin-top: 80px; }
-    #hero h1 { font-size: 3rem; margin-bottom: 10px; }
-    #hero .typed-text { color: cyan; font-size: 1.5rem; }
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      color: #00f7ff;
+    }
 
-    .card {
-      background: #1b263b;
-      padding: 20px;
+    .project-card {
+      background: #1c1c1c;
       border-radius: 10px;
-      margin: 20px 0;
-      box-shadow: 0 0 10px rgba(0,255,255,0.1);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 0 15px rgba(0,0,0,0.6);
+      transition: transform 0.3s;
     }
 
-    .floating-contact {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 999;
+    .project-card:hover {
+      transform: scale(1.02);
+    }
+
+    .project-title {
+      font-size: 1.3rem;
+      color: #00f7ff;
+    }
+
+    .project-desc {
+      margin-top: 0.5rem;
+      line-height: 1.6;
+    }
+
+    .contact-buttons {
       display: flex;
-      flex-direction: column;
-      gap: 10px;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 2rem;
     }
 
-    .floating-contact a {
-      background: cyan;
-      color: black;
-      padding: 10px 15px;
-      border-radius: 50px;
+    .contact-buttons a {
       text-decoration: none;
-      box-shadow: 0 0 5px cyan;
+      padding: 0.8rem 1.2rem;
+      background: #00f7ff;
+      color: #000;
+      border-radius: 50px;
       font-weight: bold;
-      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: background 0.3s;
     }
 
-    .floating-contact a:hover { box-shadow: 0 0 15px cyan; }
-
-    .dark-toggle {
-      position: fixed;
-      top: 80px;
-      right: 20px;
-      background: cyan;
-      border: none;
-      color: black;
-      padding: 10px;
-      border-radius: 30px;
-      cursor: pointer;
-      font-weight: bold;
+    .contact-buttons a:hover {
+      background: #00c5cc;
     }
 
     footer {
       text-align: center;
-      padding: 20px;
-      background: #1b263b;
-      margin-top: 30px;
+      padding: 1.5rem;
+      background: #000;
+      color: #888;
     }
 
-    @media screen and (max-width: 768px) {
-      nav ul {
-        flex-direction: column;
-        background: #1b263b;
-        position: absolute;
-        top: 60px;
-        right: 20px;
-        padding: 10px;
-        display: none;
+    @media (max-width: 768px) {
+      .typed-text {
+        font-size: 1.5rem;
       }
-      nav.active ul { display: flex; }
-      #hero h1 { font-size: 2rem; }
+
+      nav {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .contact-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
     }
   </style>
 </head>
 <body>
+
+  <nav>
+    <div><strong>Vinit</strong></div>
+    <div>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="vouches.html">Vouches</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
   <header>
-    <nav>
-      <div class="logo">Vinit</div>
-      <ul>
-        <li><a href="#about">About</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="vouches.html" target="_blank">Vouches</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
+    <div>
+      <h1>Hi, I'm Vinit 👋</h1>
+      <div class="typed-text"></div>
+    </div>
   </header>
 
-  <section id="hero">
-    <h1>Hi, I'm Vinit</h1>
-    <div class="typed-text"></div>
+  <section id="about" data-aos="fade-up">
+    <h2 class="section-title">About Me</h2>
+    <p>I’m a developer with hands-on experience in creating Telegram bots, websites, and real-time apps. From automating crypto swaps to building fully animated and interactive 3D portfolios, I love crafting digital experiences that wow users.</p>
   </section>
 
-  <section id="about">
-    <h2>About Me</h2>
-    <div class="card" data-aos="fade-up">
-      <p>I'm a passionate developer experienced in building Telegram bots, interactive websites, and crypto integrations. I specialize in Python, Firebase, and modern web tech with a flair for smooth UI/UX and 3D design.</p>
+  <section id="projects" data-aos="fade-up">
+    <h2 class="section-title">Projects</h2>
+    <div class="project-card">
+      <div class="project-title">Crypto Swap Telegram Bot</div>
+      <p class="project-desc">A powerful crypto-to-crypto Telegram bot using the ChangeNOW API, MySQL, and real-time tracking. Includes swap confirmation, transaction logs, vouch forwarding, and more.</p>
     </div>
-  </section>
-
-  <section id="projects">
-    <h2>Projects</h2>
-    <div class="card" data-aos="zoom-in">
-      <h3>Crypto Swap Bot</h3>
-      <p>A Telegram bot that allows crypto-to-crypto swaps using ChangeNOW API, featuring real-time tracking, admin panel, and proof logging.</p>
+    <div class="project-card">
+      <div class="project-title">Real-Time Vouch System</div>
+      <p class="project-desc">A Firebase-powered testimonial system integrated into my portfolio. Visitors can submit vouches with animations, and admin can delete them instantly.</p>
     </div>
-    <div class="card" data-aos="zoom-in">
-      <h3>Vouch System</h3>
-      <p>A real-time Firebase testimonial system integrated into a stylish portfolio with admin-only deletion, smooth UI, and instant feedback.</p>
-    </div>
-    <div class="card" data-aos="zoom-in">
-      <h3>Portfolio Website</h3>
-      <p>My own interactive 3D-themed portfolio, built with HTML, CSS, JS, and Firebase integration, featuring animations, contact options, and projects showcase.</p>
+    <div class="project-card">
+      <div class="project-title">3D Animated Portfolio Website</div>
+      <p class="project-desc">My personal interactive portfolio with parallax effects, tilt animations, floating buttons, and a smooth user experience across all devices.</p>
     </div>
   </section>
 
-  <section id="contact">
-    <h2>Contact Me</h2>
-    <div class="card" data-aos="fade-up">
-      <p>Telegram: <a href="https://t.me/CarnageV1" target="_blank">@CarnageV1</a></p>
-      <p>Email: <a href="mailto:vinit2712@aol.com">vinit2712@aol.com</a></p>
+  <section id="contact" data-aos="fade-up">
+    <h2 class="section-title">Contact Me</h2>
+    <div class="contact-buttons">
+      <a href="https://t.me/CarnageV1" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>
+      <a href="mailto:vinit2712@aol.com"><i class="fas fa-envelope"></i> Email</a>
     </div>
   </section>
-
-  <div class="floating-contact">
-    <a href="https://t.me/CarnageV1" target="_blank">Telegram</a>
-    <a href="mailto:vinit2712@aol.com">Email</a>
-  </div>
-
-  <button class="dark-toggle" onclick="document.body.classList.toggle('dark')">Toggle Mode</button>
 
   <footer>
-    <p>&copy; 2025 Vinit. All rights reserved.</p>
+    &copy; 2025 Vinit | All rights reserved.
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   <script>
-    const typed = new Typed('.typed-text', {
-      strings: ['Developer', 'Bot Builder', 'Web Wizard'],
+    AOS.init();
+
+    new Typed('.typed-text', {
+      strings: ["I'm a Developer", "Bot Builder", "Web Wizard", "Crypto Enthusiast"],
       typeSpeed: 60,
       backSpeed: 40,
-      loop: true,
+      loop: true
     });
-    AOS.init({ duration: 1000 });
   </script>
 </body>
 </html>
