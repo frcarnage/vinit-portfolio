@@ -1,174 +1,196 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Vinit | Portfolio</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <title>Vinit | Developer Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
   <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #0f2027;
-      color: white;
-      scroll-behavior: smooth;
-    }
-    section {
-      padding: 80px 20px;
-      max-width: 1100px;
-      margin: auto;
+      font-family: 'Poppins', sans-serif;
+      background: #0d1b2a;
+      color: #fff;
+      line-height: 1.6;
     }
     header {
-      background: #0f2027;
       position: fixed;
-      width: 100%;
       top: 0;
-      z-index: 999;
+      width: 100%;
+      background: #1b263b;
+      padding: 10px 0;
+      z-index: 1000;
+    }
+    nav {
       display: flex;
       justify-content: space-between;
-      padding: 20px 40px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
     }
-    header a {
-      color: white;
-      margin: 0 15px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: color 0.3s;
-    }
-    header a:hover {
-      color: #00ffe5;
-    }
-    .hero {
-      text-align: center;
-      margin-top: 120px;
-    }
-    .hero h1 {
-      font-size: 3rem;
-    }
-    .hero span {
-      font-size: 1.4rem;
-      color: #00ffe5;
-    }
-    .section-title {
-      text-align: center;
-      font-size: 2.2rem;
-      margin-bottom: 30px;
-      color: #00ffe5;
-    }
-    .project-card, .about-card {
-      background: #1f1f1f;
-      padding: 20px;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-    }
-    .contact-buttons {
+    nav .logo { font-size: 1.5rem; font-weight: bold; color: cyan; }
+    nav ul {
+      list-style: none;
       display: flex;
-      justify-content: center;
       gap: 20px;
-      margin-top: 20px;
     }
-    .contact-buttons a {
-      padding: 12px 24px;
-      background: #00ffe5;
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    nav ul li a:hover { color: cyan; }
+
+    section {
+      padding: 100px 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    #hero { text-align: center; margin-top: 80px; }
+    #hero h1 { font-size: 3rem; margin-bottom: 10px; }
+    #hero .typed-text { color: cyan; font-size: 1.5rem; }
+
+    .card {
+      background: #1b263b;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+      box-shadow: 0 0 10px rgba(0,255,255,0.1);
+    }
+
+    .floating-contact {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .floating-contact a {
+      background: cyan;
       color: black;
+      padding: 10px 15px;
+      border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 0 5px cyan;
       font-weight: bold;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: background 0.3s ease;
+      transition: 0.3s;
     }
-    .contact-buttons a:hover {
-      background: #00cfcf;
+
+    .floating-contact a:hover { box-shadow: 0 0 15px cyan; }
+
+    .dark-toggle {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      background: cyan;
+      border: none;
+      color: black;
+      padding: 10px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: bold;
     }
-    .leave-vouch {
-      display: block;
-      text-align: center;
-      margin: 50px auto 20px;
-      color: #00ffe5;
-      text-decoration: none;
-      font-size: 1.2rem;
-    }
-    .footer {
+
+    footer {
       text-align: center;
       padding: 20px;
-      background: #111;
-      color: #aaa;
+      background: #1b263b;
+      margin-top: 30px;
+    }
+
+    @media screen and (max-width: 768px) {
+      nav ul {
+        flex-direction: column;
+        background: #1b263b;
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        padding: 10px;
+        display: none;
+      }
+      nav.active ul { display: flex; }
+      #hero h1 { font-size: 2rem; }
     }
   </style>
 </head>
 <body>
+  <header>
+    <nav>
+      <div class="logo">Vinit</div>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="vouches.html" target="_blank">Vouches</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
 
-<header>
-  <div><strong>Vinit</strong></div>
-  <nav>
-    <a href="#about">About</a>
-    <a href="#projects">Projects</a>
-    <a href="#contact">Contact</a>
-  </nav>
-</header>
+  <section id="hero">
+    <h1>Hi, I'm Vinit</h1>
+    <div class="typed-text"></div>
+  </section>
 
-<section class="hero" data-aos="fade-up">
-  <h1>Hi, I'm Vinit</h1>
-  <span id="typed-text"></span>
-</section>
+  <section id="about">
+    <h2>About Me</h2>
+    <div class="card" data-aos="fade-up">
+      <p>I'm a passionate developer experienced in building Telegram bots, interactive websites, and crypto integrations. I specialize in Python, Firebase, and modern web tech with a flair for smooth UI/UX and 3D design.</p>
+    </div>
+  </section>
 
-<section id="about" data-aos="fade-up">
-  <h2 class="section-title">About Me</h2>
-  <div class="about-card">
-    <p>I'm a passionate developer experienced in building Telegram bots, interactive websites, and crypto integrations. I specialize in Python, Firebase, and modern web tech with a flair for smooth UI/UX and 3D design.</p>
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="card" data-aos="zoom-in">
+      <h3>Crypto Swap Bot</h3>
+      <p>A Telegram bot that allows crypto-to-crypto swaps using ChangeNOW API, featuring real-time tracking, admin panel, and proof logging.</p>
+    </div>
+    <div class="card" data-aos="zoom-in">
+      <h3>Vouch System</h3>
+      <p>A real-time Firebase testimonial system integrated into a stylish portfolio with admin-only deletion, smooth UI, and instant feedback.</p>
+    </div>
+    <div class="card" data-aos="zoom-in">
+      <h3>Portfolio Website</h3>
+      <p>My own interactive 3D-themed portfolio, built with HTML, CSS, JS, and Firebase integration, featuring animations, contact options, and projects showcase.</p>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact Me</h2>
+    <div class="card" data-aos="fade-up">
+      <p>Telegram: <a href="https://t.me/CarnageV1" target="_blank">@CarnageV1</a></p>
+      <p>Email: <a href="mailto:vinit2712@aol.com">vinit2712@aol.com</a></p>
+    </div>
+  </section>
+
+  <div class="floating-contact">
+    <a href="https://t.me/CarnageV1" target="_blank">Telegram</a>
+    <a href="mailto:vinit2712@aol.com">Email</a>
   </div>
-</section>
 
-<section id="projects" data-aos="fade-up">
-  <h2 class="section-title">Projects</h2>
-  <div class="project-card">
-    <h3>🧠 Crypto Swap Bot</h3>
-    <p>A Telegram bot for real-time crypto swaps with ChangeNOW API, live tracking, swap logs, vouches, and admin dashboard.</p>
-  </div>
-  <div class="project-card">
-    <h3>🌐 Portfolio Website</h3>
-    <p>3D-themed, fully responsive site with animated effects, smooth scroll, dark/light mode, and Firebase-powered vouches.</p>
-  </div>
-  <!-- Add more projects here -->
-</section>
+  <button class="dark-toggle" onclick="document.body.classList.toggle('dark')">Toggle Mode</button>
 
-<a href="vouches.html" class="leave-vouch" data-aos="fade-up">💬 Leave a Vouch</a>
+  <footer>
+    <p>&copy; 2025 Vinit. All rights reserved.</p>
+  </footer>
 
-<section id="contact" data-aos="fade-up">
-  <h2 class="section-title">Contact Me</h2>
-  <div class="contact-buttons">
-    <a href="https://t.me/CarnageV1" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>
-    <a href="mailto:vinit2712@aol.com"><i class="fas fa-envelope"></i> Email</a>
-  </div>
-</section>
-
-<footer class="footer">
-  © 2025 Vinit. All rights reserved.
-</footer>
-
-<!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-<script>
-  AOS.init();
-  new Typed("#typed-text", {
-    strings: ["Developer", "Bot Builder", "Web Wizard"],
-    typeSpeed: 80,
-    backSpeed: 40,
-    loop: true
-  });
-</script>
-
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-9X13LK6SSL"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-9X13LK6SSL');
-</script>
-
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    const typed = new Typed('.typed-text', {
+      strings: ['Developer', 'Bot Builder', 'Web Wizard'],
+      typeSpeed: 60,
+      backSpeed: 40,
+      loop: true,
+    });
+    AOS.init({ duration: 1000 });
+  </script>
 </body>
 </html>
