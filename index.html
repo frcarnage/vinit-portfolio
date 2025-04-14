@@ -1,213 +1,582 @@
+<div class="card">
+  <div class="card-inner">
+    <div class="card-front">
+      <h2>Website Building</h2>
+    </div>
+    <div class="card-back">
+      <p>We create custom, dynamic websites tailored to your needs.</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .card {
+    width: 300px;
+    height: 400px;
+    perspective: 1000px;
+    margin: 20px;
+  }
+
+  .card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+  }
+
+  .card:hover .card-inner {
+    transform: rotateY(180deg);
+  }
+
+  .card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    color: #fff;
+  }
+
+  .card-front {
+    background: #333;
+  }
+
+  .card-back {
+    background: #444;
+    transform: rotateY(180deg);
+  }
+</style>
+<!-- Include Particle.js -->
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+<div id="particles-js" style="width: 100%; height: 100%; position: absolute;"></div>
+
+<script>
+  particlesJS('particles-js', {
+    particles: {
+      number: {
+        value: 80
+      },
+      size: {
+        value: 3
+      },
+      move: {
+        speed: 1
+      }
+    }
+  });
+</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Vinit | Developer Portfolio</title>
-  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="favicon.ico" />
-  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vinit's 3D Website</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    html {
-      scroll-behavior: smooth;
-    }
-
+    /* Add your styles here */
     body {
       margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: #0c0c0c;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #121212;
       color: #fff;
       overflow-x: hidden;
     }
 
-    nav {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(0,0,0,0.8);
-      z-index: 999;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-    }
-
-    nav a {
-      color: #fff;
-      margin: 0 1rem;
-      text-decoration: none;
-      font-weight: 600;
-      transition: 0.3s ease;
-    }
-
-    nav a:hover {
-      color: #00f7ff;
-    }
-
-    header {
+    /* Hero Section */
+    .hero {
       height: 100vh;
-      background: url('bg3d.png') no-repeat center center/cover;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 2rem;
+      position: relative;
+      z-index: 2;
     }
 
-    .typed-text {
-      font-size: 2rem;
-      color: #00f7ff;
+    .hero h1 {
+      font-size: 4rem;
+      color: #fff;
+      text-transform: uppercase;
     }
 
-    section {
-      padding: 4rem 2rem;
-      max-width: 1100px;
-      margin: auto;
-    }
-
-    .section-title {
-      font-size: 2rem;
-      margin-bottom: 2rem;
-      text-align: center;
-      color: #00f7ff;
-    }
-
-    .project-card {
-      background: #1c1c1c;
-      border-radius: 10px;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 0 15px rgba(0,0,0,0.6);
-      transition: transform 0.3s;
-    }
-
-    .project-card:hover {
-      transform: scale(1.02);
-    }
-
-    .project-title {
-      font-size: 1.3rem;
-      color: #00f7ff;
-    }
-
-    .project-desc {
-      margin-top: 0.5rem;
-      line-height: 1.6;
-    }
-
-    .contact-buttons {
+    /* Service Cards */
+    .service-cards {
       display: flex;
-      gap: 1rem;
       justify-content: center;
-      margin-top: 2rem;
+      margin-top: 50px;
     }
 
-    .contact-buttons a {
-      text-decoration: none;
-      padding: 0.8rem 1.2rem;
-      background: #00f7ff;
-      color: #000;
-      border-radius: 50px;
-      font-weight: bold;
+    .card {
+      width: 300px;
+      height: 400px;
+      margin: 20px;
+      perspective: 1000px;
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.5s;
+    }
+
+    .card:hover .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-front, .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
       display: flex;
+      justify-content: center;
       align-items: center;
-      gap: 0.5rem;
-      transition: background 0.3s;
+      font-size: 20px;
+      color: #fff;
     }
 
-    .contact-buttons a:hover {
-      background: #00c5cc;
+    .card-front {
+      background: #333;
     }
 
-    footer {
+    .card-back {
+      background: #444;
+      transform: rotateY(180deg);
+    }
+
+    /* Contact Section */
+    .contact {
       text-align: center;
-      padding: 1.5rem;
-      background: #000;
-      color: #888;
+      margin-top: 50px;
     }
 
-    @media (max-width: 768px) {
-      .typed-text {
-        font-size: 1.5rem;
-      }
+    .contact button {
+      padding: 15px 30px;
+      font-size: 1.5rem;
+      border: none;
+      background-color: #00bcd4;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
 
-      nav {
-        flex-direction: column;
-        gap: 0.5rem;
-      }
-
-      .contact-buttons {
-        flex-direction: column;
-        align-items: center;
-      }
+    .contact button:hover {
+      background-color: #008c99;
+      transform: scale(1.1);
     }
   </style>
 </head>
 <body>
-
-  <nav>
-    <div><strong>Vinit</strong></div>
-    <div>
-      <a href="#about">About</a>
-      <a href="#projects">Projects</a>
-      <a href="vouches.html">Vouches</a>
-      <a href="#contact">Contact</a>
-    </div>
-  </nav>
-
-  <header>
-    <div>
-      <h1>Hi, I'm Vinit 👋</h1>
-      <div class="typed-text"></div>
-    </div>
-  </header>
-
-  <section id="about" data-aos="fade-up">
-    <h2 class="section-title">About Me</h2>
-    <p>I’m a developer with hands-on experience in creating Telegram bots, websites, and real-time apps. From automating crypto swaps to building fully animated and interactive 3D portfolios, I love crafting digital experiences that wow users.</p>
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>We Build Websites | We Create Telegram Bots | We Code Anything</h1>
   </section>
 
-  <section id="projects" data-aos="fade-up">
-    <h2 class="section-title">Projects</h2>
-    <div class="project-card">
-      <div class="project-title">Crypto Swap Telegram Bot</div>
-      <p class="project-desc">A powerful crypto-to-crypto Telegram bot using the ChangeNOW API, MySQL, and real-time tracking. Includes swap confirmation, transaction logs, vouch forwarding, and more.</p>
+  <!-- Service Cards Section -->
+  <section class="service-cards">
+    <div class="card">
+      <div class="card-inner">
+        <div class="card-front">
+          <h2>Website Building</h2>
+        </div>
+        <div class="card-back">
+          <p>Custom websites tailored to your needs.</p>
+        </div>
+      </div>
     </div>
-    <div class="project-card">
-      <div class="project-title">Real-Time Vouch System</div>
-      <p class="project-desc">A Firebase-powered testimonial system integrated into my portfolio. Visitors can submit vouches with animations, and admin can delete them instantly.</p>
-    </div>
-    <div class="project-card">
-      <div class="project-title">3D Animated Portfolio Website</div>
-      <p class="project-desc">My personal interactive portfolio with parallax effects, tilt animations, floating buttons, and a smooth user experience across all devices.</p>
-    </div>
-  </section>
 
-  <section id="contact" data-aos="fade-up">
-    <h2 class="section-title">Contact Me</h2>
-    <div class="contact-buttons">
-      <a href="https://t.me/CarnageV1" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>
-      <a href="mailto:vinit2712@aol.com"><i class="fas fa-envelope"></i> Email</a>
+    <div class="card">
+      <div class="card-inner">
+        <div class="card-front">
+          <h2>Telegram Bots</h2>
+        </div>
+        <div class="card-back">
+          <p>Automated Telegram solutions for your business.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-inner">
+        <div class="card-front">
+          <h2>Anything Coded</h2>
+        </div>
+        <div class="card-back">
+          <p>From automation to custom coding, we do it all.</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <footer>
-    &copy; 2025 Vinit | All rights reserved.
-  </footer>
+  <!-- Contact Section -->
+  <section class="contact">
+    <button onclick="window.location.href='https://t.me/CarnageV1'">Contact on Telegram</button>
+  </section>
 
-  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <!-- Particle Background -->
+  <div id="particles-js"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   <script>
-    AOS.init();
-
-    new Typed('.typed-text', {
-      strings: ["I'm a Developer", "Bot Builder", "Web Wizard", "Crypto Enthusiast"],
-      typeSpeed: 60,
-      backSpeed: 40,
-      loop: true
+    particlesJS('particles-js', {
+      particles: {
+        number: { value: 80 },
+        size: { value: 3 },
+        move: { speed: 1 }
+      }
     });
   </script>
 </body>
 </html>
+<!-- Navbar -->
+<nav class="navbar">
+  <ul>
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<style>
+  /* Navbar Styles */
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 15px;
+    z-index: 10;
+    transition: all 0.3s ease;
+  }
+
+  .navbar ul {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .navbar li {
+    margin: 0 20px;
+  }
+
+  .navbar a {
+    text-decoration: none;
+    font-size: 1.2rem;
+    color: #fff;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+  }
+
+  .navbar a:hover {
+    color: #00bcd4;
+  }
+</style>
+<!-- Particle.js Background -->
+<div id="particles-js" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%;"></div>
+
+<script>
+  particlesJS('particles-js', {
+    particles: {
+      number: { value: 100 },
+      size: { value: 4 },
+      move: { speed: 2 }
+    },
+    interactivity: {
+      events: {
+        onhover: {
+          enable: true,
+          mode: 'repulse'
+        }
+      }
+    }
+  });
+</script>
+<!-- Include AOS.js for Scroll Animations -->
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+<script>
+  // Initialize AOS
+  AOS.init();
+</script>
+<!-- Hero Section with AOS Animation -->
+<section class="hero" data-aos="fade-up">
+  <h1>We Build Websites | We Create Telegram Bots | We Code Anything</h1>
+</section>
+
+<!-- Service Cards with AOS Animation -->
+<section class="service-cards" id="services">
+  <div class="card" data-aos="flip-left">
+    <div class="card-inner">
+      <div class="card-front">
+        <h2>Website Building</h2>
+      </div>
+      <div class="card-back">
+        <p>Custom websites tailored to your needs.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-aos="flip-left" data-aos-delay="200">
+    <div class="card-inner">
+      <div class="card-front">
+        <h2>Telegram Bots</h2>
+      </div>
+      <div class="card-back">
+        <p>Automated Telegram solutions for your business.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-aos="flip-left" data-aos-delay="400">
+    <div class="card-inner">
+      <div class="card-front">
+        <h2>Anything Coded</h2>
+      </div>
+      <div class="card-back">
+        <p>From automation to custom coding, we do it all.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section with AOS Animation -->
+<section class="contact" id="contact" data-aos="fade-up" data-aos-delay="600">
+  <button onclick="window.location.href='https://t.me/CarnageV1'">Contact on Telegram</button>
+</section>
+<style>
+  .contact button {
+    padding: 15px 30px;
+    font-size: 1.5rem;
+    border: none;
+    background-color: #00bcd4;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .contact button:hover {
+    background-color: #008c99;
+    transform: scale(1.1);
+    box-shadow: 0 0 15px #00bcd4;
+  }
+</style>
+<style>
+  .contact button {
+    padding: 15px 30px;
+    font-size: 1.5rem;
+    border: none;
+    background-color: #00bcd4;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .contact button:hover {
+    background-color: #008c99;
+    transform: scale(1.1);
+    box-shadow: 0 0 15px #00bcd4;
+  }
+</style>
+<style>
+  /* Mobile styles */
+  @media (max-width: 768px) {
+    .service-cards {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .card {
+      margin: 10px 0;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+    }
+
+    .navbar ul {
+      flex-direction: column;
+    }
+  }
+</style>
+<!-- Animated Background -->
+<div class="animated-background"></div>
+
+<style>
+  .animated-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('social-media-icons.png') repeat;
+    animation: moveBackground 60s linear infinite;
+    opacity: 0.1;
+    z-index: 1;
+  }
+
+  @keyframes moveBackground {
+    0% { background-position: 0 0; }
+    100% { background-position: 2000px 2000px; }
+  }
+</style>
+<style>
+  .card {
+    width: 300px;
+    height: 400px;
+    margin: 20px;
+    perspective: 1500px;
+    transition: transform 0.4s ease;
+  }
+
+  .card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease;
+  }
+
+  .card:hover .card-inner {
+    transform: rotateY(15deg) rotateX(15deg);
+  }
+
+  .card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    color: #fff;
+  }
+
+  .card-front {
+    background: #333;
+  }
+
+  .card-back {
+    background: #444;
+    transform: rotateY(180deg);
+  }
+</style>
+<!-- Image Slider -->
+<section class="gallery">
+  <div class="slider">
+    <img src="image1.jpg" alt="Image 1">
+    <img src="image2.jpg" alt="Image 2">
+    <img src="image3.jpg" alt="Image 3">
+  </div>
+</section>
+
+<style>
+  .gallery {
+    position: relative;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .slider {
+    display: flex;
+    transition: transform 1s ease;
+  }
+
+  .slider img {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+  }
+
+  .gallery:hover .slider {
+    transform: translateX(-100%);
+  }
+</style>
+<!-- Footer -->
+<footer>
+  <div class="footer-content">
+    <p>&copy; 2025 Vinit. All Rights Reserved.</p>
+    <div class="social-links">
+      <a href="https://t.me/CarnageV1" target="_blank"><img src="telegram-icon.png" alt="Telegram"></a>
+      <a href="https://www.instagram.com/yourprofile" target="_blank"><img src="instagram-icon.png" alt="Instagram"></a>
+      <a href="https://twitter.com/yourprofile" target="_blank"><img src="twitter-icon.png" alt="Twitter"></a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  footer {
+    background-color: #121212;
+    padding: 20px 0;
+    text-align: center;
+    color: #fff;
+  }
+
+  .social-links a {
+    margin: 0 15px;
+  }
+
+  .social-links img {
+    width: 30px;
+    height: 30px;
+  }
+</style>
+<style>
+  h1, h2 {
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  }
+
+  .contact button:hover {
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+  }
+
+  .gallery img {
+    transition: transform 0.3s ease;
+  }
+
+  .gallery img:hover {
+    transform: scale(1.1);
+  }
+</style>
+<style>
+  @media (max-width: 768px) {
+    .service-cards {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .navbar ul {
+      flex-direction: column;
+    }
+
+    .card {
+      margin: 10px 0;
+      width: 90%;
+    }
+
+    .hero h1 {
+      font-size: 2rem;
+    }
+  }
+</style>
